@@ -9,6 +9,8 @@ export default {
   name: "home",
   components: {
     FrameBtn
+  },
+  mounted() {
   }
 };
 </script>

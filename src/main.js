@@ -4,6 +4,18 @@ import router from "./router";
 import store from "./store";
 
 Vue.config.productionTip = false;
+const myMixin = {
+  methods: {
+    go(path, params, query) {
+      router.push({
+        path,
+        params,
+        query
+      });
+    }
+  }
+};
+Vue.mixin(myMixin);
 
 new Vue({
   router,
