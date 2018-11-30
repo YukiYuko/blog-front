@@ -1,5 +1,5 @@
 <template>
-  <a class="frame-btn">
+  <a class="frame-btn" @click="go('index')">
     <span class="frame-btn__outline frame-btn__outline--tall">
       <span class="frame-btn__line frame-btn__line--tall"></span>
       <span class="frame-btn__line frame-btn__line--flat"></span>
