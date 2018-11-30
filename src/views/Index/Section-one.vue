@@ -5,7 +5,15 @@
     </div>
     <div class="vibrant"></div>
     <div class="text">
-      <div class="title">Yuki</div>
+      <div class="text_skew">
+        <span>Y</span>
+        <span>u</span>
+        <span>k</span>
+        <span>i</span>
+        <span>の</span>
+        <span>世</span>
+        <span>界</span>
+      </div>
       <div class="welcome">
         <span>私</span> <span>の</span> <span>秘</span> <span>密</span>
         <span>基</span> <span>地</span> <span>に</span> <span>よ</span>
@@ -72,6 +80,7 @@
     <div class="skew">
       <div class="skew-item" v-for="i in 10" :key="i"></div>
     </div>
+    <Down></Down>
   </section>
 </template>
 
@@ -79,6 +88,7 @@
 import Parallax from "parallax-js";
 import { getImg } from "../../ajax/api";
 import anime from "animejs";
+import Down from "../../components/public/Down/Down";
 export default {
   name: "Section-one",
   data() {
@@ -86,6 +96,9 @@ export default {
       img: "",
       open: false
     };
+  },
+  components: {
+    Down
   },
   mounted() {
     this._getImg();
@@ -256,6 +269,7 @@ export default {
     right: 0;
     top: 0;
     bottom: 0;
+    z-index: 10;
     .line {
       background-color: rgba(255, 255, 255, 0.6);
       position: absolute;
@@ -286,15 +300,6 @@ export default {
       left: 10%;
       bottom: 20%;
       transform: translateX(100%);
-    }
-    .title {
-      text-align: center;
-      font-size: 60px;
-      color: #fff;
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      opacity: 0;
     }
     .welcome {
       width: 100%;
@@ -428,5 +433,44 @@ export default {
     background-image: linear-gradient(124deg, #d8da69, #82ff59);
     opacity: 0.2;
   }
+}
+/**/
+.text_skew {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  transition: transform 0.3s ease-in-out;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  margin: auto;
+  font-size: 20px;
+}
+.text_skew:hover {
+  transform: rotateX(15deg) translateY(-20%);
+}
+.text_skew:hover span {
+  color: #ccc;
+}
+.text_skew:hover span:nth-child(odd) {
+  transform: skewY(15deg);
+}
+.text_skew:hover span:nth-child(even) {
+  transform: skewY(-15deg);
+  background-color: #f9f9f9;
+  color: #a6a6a6;
+}
+.text_skew > span {
+  display: block;
+  background-color: #fff;
+  width: 60px;
+  height: 60px;
+  line-height: 60px;
+  transition: transform 0.3s ease-in-out, color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  box-shadow: 0 40px 50px rgba(0, 0, 0, 0.1);
+}
+.text_skew > span:first-child {
+  border-radius: 5px 0 0 5px;
 }
 </style>
