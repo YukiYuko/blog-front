@@ -21,7 +21,7 @@ export default {
   width: 40px;
   height: 40px;
   animation: fuwafuwa 1.6s ease-in-out infinite;
-  z-index: 5;
+  z-index: 100;
   cursor: pointer;
   p {
     display: block;

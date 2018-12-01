@@ -441,7 +441,7 @@ export default {
   text-align: center;
   transition: transform 0.3s ease-in-out;
   position: absolute;
-  top: 50%;
+  top: 35%;
   left: 0;
   right: 0;
   margin: auto;
