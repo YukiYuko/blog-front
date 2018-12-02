@@ -27,6 +27,7 @@ axios.interceptors.response.use(
     return response;
   },
   error => {
+    console.log(error)
     if (error && error.response) {
       switch (error.response.status) {
         case 400:
@@ -79,9 +80,9 @@ axios.interceptors.response.use(
 
 axios.defaults.baseURL = "/api";
 //设置默认请求头
-axios.defaults.headers = {
-  "X-Requested-With": "XMLHttpRequest"
-};
+// axios.defaults.headers = {
+//   "X-Requested-With": "XMLHttpRequest"
+// };
 axios.defaults.timeout = 10000;
 
 export default {
