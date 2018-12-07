@@ -105,3 +105,10 @@ textarea {
   resize: none;
   font: 100% tahoma, \5b8b\4f53, arial;
 }
+
+/*一些公共css*/
+.container{
+  width: 1200px;
+  position: relative;
+  margin: auto;
+}

@@ -35,7 +35,7 @@ export default {
       display: block;
       width: 40px;
       height: 40px;
-      background: url("../../../assets/down.svg") no-repeat center;
+      background: url("../../../assets/images/down.svg") no-repeat center;
       background-size: 31px 22px;
       -webkit-animation: fuwafuwa2 1.6s ease infinite 0.4s;
       animation: fuwafuwa2 1.6s ease infinite 0.4s;

@@ -1,5 +1,6 @@
 //引入axios
 import axios from "axios";
+import { Message } from "iview";
 
 let cancel,
   promiseArr = {};
@@ -24,10 +25,17 @@ axios.interceptors.request.use(
 //响应拦截器即异常处理
 axios.interceptors.response.use(
   response => {
-    return response;
+    const { data, status } = response;
+    if (data.code === 200) {
+      return { data, status };
+    } else {
+      Message.error(data.info);
+      // throw (res)
+      return Promise.reject(response);
+    }
   },
   error => {
-    console.log(error)
+    console.log("error", error);
     if (error && error.response) {
       switch (error.response.status) {
         case 400:
@@ -72,8 +80,8 @@ axios.interceptors.response.use(
     } else {
       error.message = "连接到服务器失败";
     }
-    // message.error(error)
-    alert(error);
+    Message.error(error);
+    // alert(error);
     return Promise.resolve(error.response);
   }
 );

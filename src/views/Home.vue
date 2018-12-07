@@ -1,5 +1,5 @@
 <template>
-  <div class="home" flex justify="center" items="center"><FrameBtn /></div>
+  <div class="home" flex justify="center" items="center"><FrameBtn @click="go('index')"/></div>
 </template>
 
 <script>

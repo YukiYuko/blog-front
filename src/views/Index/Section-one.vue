@@ -102,7 +102,6 @@ export default {
   },
   mounted() {
     this._getImg();
-    this._getNews();
     this.initScene();
     this.initAnime();
     this.initSkew();
@@ -120,11 +119,6 @@ export default {
     _getImg() {
       getImg({ w: 1920, h: 1080 }).then(res => {
         this.img = res.data.url;
-      });
-    },
-    _getNews() {
-      getNews({page: 1, limit: 15}).then(res => {
-        console.log(res);
       });
     },
     initAnime() {

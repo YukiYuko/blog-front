@@ -9,4 +9,4 @@ export const getImg = data => jsonp(biying, data);
 /*
  * 获取新闻列表
  * */
-export const getNews = data => api.get(base_url + "/news/newsList", data);
+export const getNews = data => api.post(base_url + "/news/newsList", data);

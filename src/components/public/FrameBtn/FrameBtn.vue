@@ -1,5 +1,5 @@
 <template>
-  <a class="frame-btn" @click="go('index')">
+  <a class="frame-btn" @click="click">
     <span class="frame-btn__outline frame-btn__outline--tall">
       <span class="frame-btn__line frame-btn__line--tall"></span>
       <span class="frame-btn__line frame-btn__line--flat"></span>
@@ -9,13 +9,24 @@
       <span class="frame-btn__line frame-btn__line--flat"></span>
     </span>
     <span class="frame-btn__solid"></span>
-    <span class="frame-btn__text">Link Start !</span>
+    <span class="frame-btn__text">{{ text }}</span>
   </a>
 </template>
 
 <script>
 export default {
-  name: "FrameBtn"
+  name: "FrameBtn",
+  props: {
+    text: {
+      type: String,
+      default: "Link Start !"
+    }
+  },
+  methods: {
+    click() {
+      this.$emit("click");
+    }
+  }
 };
 </script>
 
@@ -23,7 +34,7 @@ export default {
 .frame-btn {
   line-height: 10px;
   display: inline-block;
-  padding: 25px 30px;
+  padding: 18px 30px;
   font-size: 10px;
   letter-spacing: 3px;
   text-decoration: none;
