@@ -1,6 +1,12 @@
 <template>
   <div class="section-two">
-    <div class="container">
+    <vue-ins-progress-bar></vue-ins-progress-bar>
+    <v-contextmenu ref="contextmenu">
+      <v-contextmenu-item>菜单1</v-contextmenu-item>
+      <v-contextmenu-item>菜单2</v-contextmenu-item>
+      <v-contextmenu-item>菜单3</v-contextmenu-item>
+    </v-contextmenu>
+    <div class="container" v-contextmenu:contextmenu>
       <div class="news-list">
         <div
           class="news-list-item"
@@ -8,8 +14,9 @@
           v-for="(item, index) in list"
           :key="index"
         >
-          <div class="left" :style="{ background: _getColor() }">
-            <img v-if="item.image" :src="item.image" alt="" />
+          <div class="left">
+            <!-- <img src="../../assets/images/404.jpg" alt="" /> -->
+            <img @click="previewImage(item);" v-lazy="item.image" alt="" />
           </div>
           <div class="right" flex justify="center" dir="column">
             <p class="time">{{ item.createdAt }}</p>
@@ -22,6 +29,15 @@
         <FrameBtn @click="loadMore" :text="loadMoreText"></FrameBtn>
       </div>
     </div>
+    <Modal
+      :styles="{ background: 'none' }"
+      :footer-hide="true"
+      v-model="show_modal"
+      width="800px"
+    >
+      <div slot="header">{{ current.title }}</div>
+      <img style="width: 100%;" class="imgUrl" :src="current.image" alt="" />
+    </Modal>
   </div>
 </template>
 
@@ -38,7 +54,9 @@ export default {
       limit: 10,
       list: [],
       loadMoreText: "加载更多",
-      hasMore: true
+      hasMore: true,
+      show_modal: false,
+      current: ""
     };
   },
   components: {
@@ -55,7 +73,7 @@ export default {
       }
       console.log(this);
       this.loadMoreText = "加载中";
-      this.$Loading.start();
+      this.$insProgress.start();
       getNews({ page: this.page, limit: this.limit })
         .then(res => {
           if (res.data.length) {
@@ -72,10 +90,10 @@ export default {
             this.loadMoreText = "没有更多啦!";
             this.hasMore = false;
           }
-          this.$Loading.finish();
+          this.$insProgress.finish();
         })
         .catch(() => {
-          this.$Loading.finish();
+          this.$insProgress.finish();
         });
     },
     // 获取随机颜色值
@@ -85,12 +103,17 @@ export default {
     // 加载更多
     loadMore() {
       this._getNews();
+    },
+    // 查看图片
+    previewImage(current) {
+      this.current = current;
+      this.show_modal = true;
     }
   }
 };
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 .section-two {
   min-height: 100vh;
   padding-bottom: 60px;

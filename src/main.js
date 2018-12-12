@@ -2,6 +2,10 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
+import VueLazyload from "vue-lazyload";
+import contentmenu from "v-contextmenu";
+import VueInsProgressBar from "vue-ins-progress-bar";
+import "v-contextmenu/dist/index.css";
 import "./plugins/iview.js";
 
 Vue.config.productionTip = false;
@@ -17,6 +21,20 @@ const myMixin = {
   }
 };
 Vue.mixin(myMixin);
+Vue.use(VueLazyload, {
+  preLoad: 1.3,
+  error: require("./assets/images/404.jpg"),
+  loading: require("./assets/images/404.jpg"),
+  attempt: 1
+});
+Vue.use(contentmenu);
+const options = {
+  position: "fixed",
+  show: true,
+  height: "4px"
+};
+
+Vue.use(VueInsProgressBar, options);
 
 new Vue({
   router,
