@@ -8,7 +8,9 @@
           v-for="(item, index) in list"
           :key="index"
         >
-          <div class="left" :style="{ background: _getColor() }"></div>
+          <div class="left" :style="{ background: _getColor() }">
+            <img v-if="item.image" :src="item.image" alt="" />
+          </div>
           <div class="right" flex justify="center" dir="column">
             <p class="time">{{ item.createdAt }}</p>
             <div class="title">{{ item.title }}</div>
@@ -49,26 +51,32 @@ export default {
   methods: {
     _getNews() {
       if (!this.hasMore) {
-        console.log(1111111111111)
         return false;
       }
+      console.log(this);
       this.loadMoreText = "加载中";
-      getNews({ page: this.page, limit: this.limit }).then(res => {
-        if (res.data.length) {
-          this.list = [...this.list, ...res.data];
-          if (res.data.length < this.limit) {
+      this.$Loading.start();
+      getNews({ page: this.page, limit: this.limit })
+        .then(res => {
+          if (res.data.length) {
+            this.list = [...this.list, ...res.data];
+            if (res.data.length < this.limit) {
+              this.loadMoreText = "没有更多啦!";
+              this.hasMore = false;
+            } else {
+              this.page++;
+              this.loadMoreText = "加载更多";
+              this.hasMore = true;
+            }
+          } else {
             this.loadMoreText = "没有更多啦!";
             this.hasMore = false;
-          } else {
-            this.page++;
-            this.loadMoreText = "加载更多";
-            this.hasMore = true;
           }
-        } else {
-          this.loadMoreText = "没有更多啦!";
-          this.hasMore = false;
-        }
-      });
+          this.$Loading.finish();
+        })
+        .catch(() => {
+          this.$Loading.finish();
+        });
     },
     // 获取随机颜色值
     _getColor() {
@@ -112,6 +120,19 @@ export default {
       left: 0;
       top: 0;
       z-index: 1;
+      overflow: hidden;
+      &:hover {
+        img {
+          transform: scale(1.2);
+          filter: blur(0px);
+        }
+      }
+      img {
+        width: 100%;
+        height: 100%;
+        transition: all 0.5s ease-in-out;
+        filter: blur(0.5px);
+      }
     }
     .right {
       height: 360px;

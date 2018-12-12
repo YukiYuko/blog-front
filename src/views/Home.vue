@@ -1,5 +1,9 @@
 <template>
-  <div class="home" flex justify="center" items="center"><FrameBtn @click="go('index')"/></div>
+  <div class="home" flex justify="center" items="center">
+    <FrameBtn @click="go('index')">
+      <h3 slot="aa" slot-scope="props">{{props.text}}</h3>
+    </FrameBtn>
+  </div>
 </template>
 
 <script>
@@ -10,8 +14,7 @@ export default {
   components: {
     FrameBtn
   },
-  mounted() {
-  }
+  mounted() {}
 };
 </script>
 <style lang="less">

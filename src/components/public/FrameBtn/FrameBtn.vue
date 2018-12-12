@@ -9,7 +9,9 @@
       <span class="frame-btn__line frame-btn__line--flat"></span>
     </span>
     <span class="frame-btn__solid"></span>
-    <span class="frame-btn__text">{{ text }}</span>
+    <span class="frame-btn__text">
+      <slot name="aa" :text="text"> {{ text }} </slot>
+    </span>
   </a>
 </template>
 
