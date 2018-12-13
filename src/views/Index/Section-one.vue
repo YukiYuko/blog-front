@@ -6,19 +6,15 @@
     <div class="vibrant"></div>
     <div class="text">
       <div class="text_skew">
-        <span>Y</span>
-        <span>u</span>
-        <span>k</span>
-        <span>i</span>
-        <span>の</span>
-        <span>世</span>
-        <span>界</span>
+        <span>Y</span> <span>u</span> <span>k</span> <span>i</span>
+        <span>の</span> <span>世</span> <span>界</span>
       </div>
       <div class="welcome">
         <span>私</span> <span>の</span> <span>秘</span> <span>密</span>
         <span>基</span> <span>地</span> <span>に</span> <span>よ</span>
         <span>う</span> <span>こ</span> <span>そ</span>
       </div>
+      <div class="tips"></div>
       <div class="mouse"></div>
       <div class="line line1 lineY"></div>
       <div class="line line2 lineX"></div>
@@ -86,9 +82,10 @@
 
 <script>
 import Parallax from "parallax-js";
-import { getImg, getNews } from "../../ajax/api";
+import { getImg } from "../../ajax/api";
 import anime from "animejs";
 import Down from "../../components/public/Down/Down";
+import Typed from "typed.js";
 export default {
   name: "Section-one",
   data() {
@@ -105,6 +102,7 @@ export default {
     this.initScene();
     this.initAnime();
     this.initSkew();
+    this.initTyped();
   },
   methods: {
     initScene() {
@@ -237,6 +235,20 @@ export default {
           return 300 * Math.random() + "deg";
         }
       });
+    },
+    // 打字效果
+    initTyped() {
+      let options = {
+        strings: [
+          "滚动鼠标滚轮发现新的世界....",
+          "吾之名为，凤凰院凶真！改变世界构造的支配者!",
+          "未来研究所的创始人！No.001！"
+        ],
+        fadeOut: true,
+        typeSpeed: 40,
+        loop: true
+      };
+      new Typed(".tips", options);
     }
   }
 };
@@ -314,6 +326,14 @@ export default {
         opacity: 0;
       }
     }
+    .tips {
+      width: 100%;
+      text-align: center;
+      font-size: 25px;
+      color: #fff;
+      position: absolute;
+      top: 60%;
+    }
   }
 }
 
@@ -363,9 +383,9 @@ export default {
       position: absolute;
       left: 0;
       top: 0;
-      a{
+      a {
         color: #fff;
-        i{
+        i {
           font-size: 30px;
         }
       }
@@ -420,7 +440,7 @@ export default {
   transform: translateY(0) rotate(-45deg);
 }
 /**/
-.skew{
+.skew {
   position: absolute;
   left: 0;
   top: 0;
@@ -441,7 +461,7 @@ export default {
   text-align: center;
   transition: transform 0.3s ease-in-out;
   position: absolute;
-  top: 35%;
+  top: 30%;
   left: 0;
   right: 0;
   margin: auto;
@@ -467,7 +487,8 @@ export default {
   width: 60px;
   height: 60px;
   line-height: 60px;
-  transition: transform 0.3s ease-in-out, color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out, color 0.3s ease-in-out,
+    background-color 0.3s ease-in-out;
   box-shadow: 0 40px 50px rgba(0, 0, 0, 0.1);
 }
 .text_skew > span:first-child {
