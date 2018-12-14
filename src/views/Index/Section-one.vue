@@ -1,82 +1,84 @@
 <template>
-  <section class="first">
-    <div id="scene" class="bg">
-      <img data-depth="0.2" class="img" :src="img" alt="" />
-    </div>
-    <div class="vibrant"></div>
-    <div class="text">
-      <div class="text_skew">
-        <span>Y</span> <span>u</span> <span>k</span> <span>i</span>
-        <span>の</span> <span>世</span> <span>界</span>
+  <section id="container" class="intro-effect-push">
+    <div class="first">
+      <div id="scene" class="bg">
+        <img data-depth="0.2" class="img" :src="img" alt="" />
       </div>
-      <div class="welcome">
-        <span>私</span> <span>の</span> <span>秘</span> <span>密</span>
-        <span>基</span> <span>地</span> <span>に</span> <span>よ</span>
-        <span>う</span> <span>こ</span> <span>そ</span>
+      <div class="vibrant"></div>
+      <div class="text">
+        <div class="text_skew">
+          <span>Y</span> <span>u</span> <span>k</span> <span>i</span>
+          <span>の</span> <span>世</span> <span>界</span>
+        </div>
+        <div class="welcome">
+          <span>私</span> <span>の</span> <span>秘</span> <span>密</span>
+          <span>基</span> <span>地</span> <span>に</span> <span>よ</span>
+          <span>う</span> <span>こ</span> <span>そ</span>
+        </div>
+        <div class="tips"></div>
+        <div class="mouse"></div>
+        <div class="line line1 lineY"></div>
+        <div class="line line2 lineX"></div>
+        <div class="line line3 lineY"></div>
+        <div class="line line4 lineX"></div>
       </div>
-      <div class="tips"></div>
-      <div class="mouse"></div>
-      <div class="line line1 lineY"></div>
-      <div class="line line2 lineX"></div>
-      <div class="line line3 lineY"></div>
-      <div class="line line4 lineX"></div>
+      <nav class="bt-menu" :class="{ 'bt-menu-open': open }">
+        <a class="bt-menu-trigger" @click="openMenu"> <span></span> </a>
+        <ul class="bt-menu-right">
+          <li>
+            <a flex justify="center" items="center" href="#" class="bt-icon">
+              <i class="iconfont icon-shouye"></i>
+            </a>
+          </li>
+          <li>
+            <a flex justify="center" items="center" href="#" class="bt-icon">
+              <i class="iconfont icon-xiebaogao"></i>
+            </a>
+          </li>
+          <li>
+            <a flex justify="center" items="center" href="#" class="bt-icon">
+              <i class="iconfont icon-github"></i>
+            </a>
+          </li>
+          <li>
+            <a flex justify="center" items="center" href="#" class="bt-icon">
+              <i class="iconfont icon-archive"></i>
+            </a>
+          </li>
+          <li>
+            <a flex justify="center" items="center" href="#" class="bt-icon">
+              <i class="iconfont icon-i-mail"></i>
+            </a>
+          </li>
+        </ul>
+        <ul class="bt-menu-bottom">
+          <li>
+            <a flex justify="center" items="center" href="#" class="bt-icon">
+              <i class="iconfont icon-example"></i>
+            </a>
+          </li>
+          <li>
+            <a flex justify="center" items="center" href="#" class="bt-icon">
+              <i class="iconfont icon-yinle"></i>
+            </a>
+          </li>
+          <li>
+            <a flex justify="center" items="center" href="#" class="bt-icon">
+              <i class="iconfont icon-liuyan"></i>
+            </a>
+          </li>
+          <li>
+            <a flex justify="center" items="center" href="#" class="bt-icon">
+              <i class="iconfont icon-wode"></i>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <!--<div class="skew">-->
+        <!--<div class="skew-item" v-for="i in 10" :key="i"></div>-->
+      <!--</div>-->
+      <Down></Down>
     </div>
-    <nav class="bt-menu" :class="{ 'bt-menu-open': open }">
-      <a class="bt-menu-trigger" @click="openMenu"> <span></span> </a>
-      <ul class="bt-menu-right">
-        <li>
-          <a flex justify="center" items="center" href="#" class="bt-icon">
-            <i class="iconfont icon-shouye"></i>
-          </a>
-        </li>
-        <li>
-          <a flex justify="center" items="center" href="#" class="bt-icon">
-            <i class="iconfont icon-xiebaogao"></i>
-          </a>
-        </li>
-        <li>
-          <a flex justify="center" items="center" href="#" class="bt-icon">
-            <i class="iconfont icon-github"></i>
-          </a>
-        </li>
-        <li>
-          <a flex justify="center" items="center" href="#" class="bt-icon">
-            <i class="iconfont icon-archive"></i>
-          </a>
-        </li>
-        <li>
-          <a flex justify="center" items="center" href="#" class="bt-icon">
-            <i class="iconfont icon-i-mail"></i>
-          </a>
-        </li>
-      </ul>
-      <ul class="bt-menu-bottom">
-        <li>
-          <a flex justify="center" items="center" href="#" class="bt-icon">
-            <i class="iconfont icon-example"></i>
-          </a>
-        </li>
-        <li>
-          <a flex justify="center" items="center" href="#" class="bt-icon">
-            <i class="iconfont icon-yinle"></i>
-          </a>
-        </li>
-        <li>
-          <a flex justify="center" items="center" href="#" class="bt-icon">
-            <i class="iconfont icon-liuyan"></i>
-          </a>
-        </li>
-        <li>
-          <a flex justify="center" items="center" href="#" class="bt-icon">
-            <i class="iconfont icon-wode"></i>
-          </a>
-        </li>
-      </ul>
-    </nav>
-    <div class="skew">
-      <div class="skew-item" v-for="i in 10" :key="i"></div>
-    </div>
-    <Down></Down>
   </section>
 </template>
 
@@ -86,6 +88,7 @@ import { getImg } from "../../ajax/api";
 import anime from "animejs";
 import Down from "../../components/public/Down/Down";
 import Typed from "typed.js";
+import classie from "../../lib/classie";
 export default {
   name: "Section-one",
   data() {
@@ -101,8 +104,9 @@ export default {
     this._getImg();
     this.initScene();
     this.initAnime();
-    this.initSkew();
+    // this.initSkew();
     this.initTyped();
+    // this.initScrollAnime();
   },
   methods: {
     initScene() {
@@ -249,16 +253,135 @@ export default {
         loop: true
       };
       new Typed(".tips", options);
+    },
+    // 滚动动画
+    initScrollAnime() {
+      // left: 37, up: 38, right: 39, down: 40,
+      // spacebar: 32, pageup: 33, pagedown: 34, end: 35, home: 36
+      var keys = [32, 37, 38, 39, 40],
+        wheelIter = 0;
+
+      function preventDefault(e) {
+        e = e || window.event;
+        if (e.preventDefault) e.preventDefault();
+        e.returnValue = false;
+      }
+
+      function keydown(e) {
+        for (var i = keys.length; i--; ) {
+          if (e.keyCode === keys[i]) {
+            preventDefault(e);
+            return;
+          }
+        }
+      }
+
+      function touchmove(e) {
+        preventDefault(e);
+      }
+
+      function wheel(e) {
+        // for IE
+        //if( ie ) {
+        //preventDefault(e);
+        //}
+      }
+
+      function disable_scroll() {
+        window.onmousewheel = document.onmousewheel = wheel;
+        document.onkeydown = keydown;
+        document.body.ontouchmove = touchmove;
+      }
+
+      function enable_scroll() {
+        window.onmousewheel = document.onmousewheel = document.onkeydown = document.body.ontouchmove = null;
+      }
+
+      let docElem = window.document.documentElement,
+        scrollVal,
+        isRevealed,
+        noscroll,
+        isAnimating,
+        container = document.getElementById("container"),
+        trigger = container.querySelector(".arrow");
+      console.log(trigger);
+      // 获取滚动距离
+      function scrollY() {
+        return window.pageYOffset || docElem.scrollTop;
+      }
+
+      function scrollPage() {
+        scrollVal = scrollY();
+
+        if (noscroll) {
+          if (scrollVal < 0) return false;
+          // keep it that way
+          window.scrollTo(0, 0);
+        }
+
+        if (classie.has(container, "notrans")) {
+          classie.remove(container, "notrans");
+          return false;
+        }
+
+        if (isAnimating) {
+          return false;
+        }
+
+        if (scrollVal <= 0 && isRevealed) {
+          toggle(0);
+        } else if (scrollVal > 0 && !isRevealed) {
+          toggle(1);
+        }
+      }
+      function toggle(reveal) {
+        isAnimating = true;
+
+        if (reveal) {
+          classie.add(container, "modify");
+        } else {
+          noscroll = true;
+          disable_scroll();
+          classie.remove(container, "modify");
+        }
+
+        // simulating the end of the transition:
+        setTimeout(function() {
+          isRevealed = !isRevealed;
+          isAnimating = false;
+          if (reveal) {
+            noscroll = false;
+            enable_scroll();
+          }
+        }, 1200);
+      }
+
+      // refreshing the page...
+      let pageScroll = scrollY();
+      noscroll = pageScroll === 0;
+      disable_scroll();
+      if (pageScroll) {
+        isRevealed = true;
+        classie.add(container, "notrans");
+        classie.add(container, "modify");
+      }
+      window.addEventListener("scroll", scrollPage);
+      trigger.addEventListener("click", function() {
+        toggle("reveal");
+      });
     }
   }
 };
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 .first {
   height: 100vh;
   position: relative;
   overflow: hidden;
+  margin: 0 auto;
+  min-height: 560px;
+  width: 100%;
   .bg {
     height: 100%;
     position: absolute;
@@ -493,5 +616,65 @@ export default {
 }
 .text_skew > span:first-child {
   border-radius: 5px 0 0 5px;
+}
+
+/* -------------------------- */
+/* Push */
+/* -------------------------- */
+.intro-effect-push:not(.notrans) .header,
+.intro-effect-push:not(.notrans) > .title,
+.intro-effect-push:not(.notrans) .content > div {
+  -webkit-transition-property: opacity, -webkit-transform;
+  transition-property: opacity, transform;
+  -webkit-transition-duration: 1s;
+  transition-duration: 1s;
+}
+
+.intro-effect-push:not(.notrans) .header {
+  -webkit-transition-timing-function: cubic-bezier(0.7,0,0.3,1);
+  transition-timing-function: cubic-bezier(0.7,0,0.3,1);
+  -webkit-transition-duration: 1.2s;
+  transition-duration: 1.2s;
+}
+
+.intro-effect-push .codrops-demos a {
+  color: #108576;
+}
+
+.intro-effect-push .header {
+  position: absolute;
+  z-index: 1500;
+}
+
+.intro-effect-push > .title {
+  position: relative;
+  top: auto;
+  left: auto;
+  padding: 6em 1em 2em;
+}
+
+.intro-effect-push .content > div {
+  margin-top: 50px;
+  color: #b2b2c0;
+}
+
+.intro-effect-push > .title,
+.intro-effect-push .content > div {
+  -webkit-transform: translateY(400px);
+  transform: translateY(400px);
+  opacity: 0;
+}
+
+.intro-effect-push.modify > .title,
+.intro-effect-push.modify .content > div {
+  -webkit-transform: translateY(0);
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.intro-effect-push.modify .header {
+  opacity: 0;
+  -webkit-transform: translateY(-100%) scale(0.9);
+  transform: translateY(-100%) scale(0.9);
 }
 </style>

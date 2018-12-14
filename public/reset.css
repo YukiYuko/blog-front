@@ -112,3 +112,8 @@ textarea {
   position: relative;
   margin: auto;
 }
+.min_container {
+  width: 700px;
+  position: relative;
+  margin: auto;
+}

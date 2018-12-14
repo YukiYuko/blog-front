@@ -7,13 +7,18 @@ import contentmenu from "v-contextmenu";
 import VueInsProgressBar from "vue-ins-progress-bar";
 import "v-contextmenu/dist/index.css";
 import "./plugins/iview.js";
+import filters from "./filter";
+Object.keys(filters).forEach(k => {
+  console.log(filters)
+  Vue.filter(k, filters[k])
+});
 
 Vue.config.productionTip = false;
 const myMixin = {
   methods: {
-    go(path, params, query) {
+    go(name, params, query) {
       router.push({
-        path,
+        name,
         params,
         query
       });

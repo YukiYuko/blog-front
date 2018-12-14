@@ -18,7 +18,13 @@
             <!-- <img src="../../assets/images/404.jpg" alt="" /> -->
             <img @click="previewImage(item);" v-lazy="item.image" alt="" />
           </div>
-          <div class="right" flex justify="center" dir="column">
+          <div
+            @click="go('blog', { id: item._id });"
+            class="right"
+            flex
+            justify="center"
+            dir="column"
+          >
             <p class="time">{{ item.createdAt }}</p>
             <div class="title">{{ item.title }}</div>
             <div class="cont">{{ item.content }}</div>
@@ -76,9 +82,10 @@ export default {
       this.$insProgress.start();
       getNews({ page: this.page, limit: this.limit })
         .then(res => {
-          if (res.data.length) {
-            this.list = [...this.list, ...res.data];
-            if (res.data.length < this.limit) {
+          const { data } = res;
+          if (data.data.length) {
+            this.list = [...this.list, ...data.data];
+            if (data.data.length < this.limit) {
               this.loadMoreText = "没有更多啦!";
               this.hasMore = false;
             } else {
