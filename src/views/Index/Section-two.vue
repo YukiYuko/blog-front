@@ -52,6 +52,7 @@ import { getNews } from "../../ajax/api";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import FrameBtn from "../../components/public/FrameBtn/FrameBtn";
+import Detail from "./detail";
 export default {
   name: "Section-two",
   data() {
@@ -62,11 +63,14 @@ export default {
       loadMoreText: "加载更多",
       hasMore: true,
       show_modal: false,
-      current: ""
+      current: "",
+      id: "",
+      show_detail: false
     };
   },
   components: {
-    FrameBtn
+    FrameBtn,
+    Detail
   },
   mounted() {
     this._getNews();

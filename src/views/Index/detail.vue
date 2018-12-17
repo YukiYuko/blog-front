@@ -15,18 +15,20 @@
         @mouseover="show_code = true;"
         @mouseout="show_code = false;"
       >
-        <i class="iconfont icon-QR"></i> <code v-show="show_code"></code>
+        <i class="iconfont icon-QR"></i> <v-code v-show="show_code"></v-code>
       </div>
     </div>
     <div class="detail_cont">
       <div class="min_container">
-        <div class="detail_cont_title">{{ detail.title }}</div>
-        <div class="detail_cont_time">{{ detail.createdAt | getDate("year")}}</div>
+        <div class="detail_cont_title" @click="test">{{ detail.title }}</div>
+        <div class="detail_cont_time">
+          {{ detail.createdAt | getDate("year") }}
+        </div>
         <div class="detail_cont_tags">
           <a v-for="(item, index) in detail.tags" :key="index">{{ item }}</a>
         </div>
         <div class="detail_cont_banner">
-          <img :src="detail.image" :alt="detail.title">
+          <img :src="detail.image" :alt="detail.title" />
         </div>
         <div class="detail_cont_cont">{{ detail.content }}</div>
       </div>
@@ -39,6 +41,9 @@ import { getNewsDetail } from "../../ajax/api";
 import Code from "../../components/common/QRCode";
 export default {
   name: "detail",
+  props: {
+    id: String
+  },
   data() {
     return {
       detail: {},
@@ -47,7 +52,7 @@ export default {
     };
   },
   components: {
-    Code
+    VCode: Code
   },
   mounted() {
     this.getData();
@@ -58,16 +63,22 @@ export default {
   },
   methods: {
     getData() {
-      getNewsDetail({ id: this.$route.params.id }).then(res => {
-        const { data } = res;
-        this.detail = data;
-      });
+      let id = this.id || this.$route.params.id || "";
+      if (id) {
+        getNewsDetail({ id: id }).then(res => {
+          const { data } = res;
+          this.detail = data;
+        });
+      }
     },
     scroll() {
       window.addEventListener("scroll", () => {
         let scrollVal = window.document.documentElement.scrollTop;
         this.scrollVal = scrollVal;
       });
+    },
+    test() {
+      history.pushState("", "", "/");
     }
   }
 };
@@ -114,10 +125,9 @@ export default {
     }
   }
   .detail_cont {
-    height: 2000px;
     padding: 80px 0;
-    .detail_cont_banner{
-      img{
+    .detail_cont_banner {
+      img {
         width: 100%;
       }
     }

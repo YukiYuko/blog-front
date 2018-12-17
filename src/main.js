@@ -9,8 +9,8 @@ import "v-contextmenu/dist/index.css";
 import "./plugins/iview.js";
 import filters from "./filter";
 Object.keys(filters).forEach(k => {
-  console.log(filters)
-  Vue.filter(k, filters[k])
+  console.log(filters);
+  Vue.filter(k, filters[k]);
 });
 
 Vue.config.productionTip = false;
@@ -46,3 +46,7 @@ new Vue({
   store,
   render: h => h(App)
 }).$mount("#app");
+
+router.afterEach(() => {
+  window.scrollTo(0, 0);
+});

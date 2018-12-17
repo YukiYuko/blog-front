@@ -10,9 +10,19 @@ import SectionOne from "./Section-one";
 import SectionTwo from "./Section-two";
 export default {
   name: "index",
+  data() {
+    return {
+      show: true
+    };
+  },
   components: {
     SectionOne,
     SectionTwo
+  },
+  methods: {
+    openDetail() {
+      this.show = false
+    }
   }
 };
 </script>
