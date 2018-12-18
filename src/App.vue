@@ -37,4 +37,15 @@ export default {
 .slide-fade-leave-active {
   opacity: 0;
 }
+
+.slide-up-enter-active,
+.slide-up-leave-active {
+  transition: opacity 0.5s;
+}
+.slide-up-enter/* .fade-leave-active below version 2.1.8 */ {
+  bottom: 250px;
+}
+.slide-up-leave-to{
+  bottom: 100%;
+}
 </style>

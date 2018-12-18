@@ -33,12 +33,14 @@
         <div class="detail_cont_cont">{{ detail.content }}</div>
       </div>
     </div>
+    <BackTop :scrollTop="100"></BackTop>
   </div>
 </template>
 
 <script>
 import { getNewsDetail } from "../../ajax/api";
 import Code from "../../components/common/QRCode";
+import BackTop from "../../components/public/BackTop/BackTop";
 export default {
   name: "detail",
   props: {
@@ -52,7 +54,8 @@ export default {
     };
   },
   components: {
-    VCode: Code
+    VCode: Code,
+    BackTop
   },
   mounted() {
     this.getData();

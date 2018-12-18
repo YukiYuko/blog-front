@@ -2,12 +2,14 @@
   <div class="index">
     <section-one></section-one>
     <section-two></section-two>
+    <BackTop></BackTop>
   </div>
 </template>
 
 <script>
 import SectionOne from "./Section-one";
 import SectionTwo from "./Section-two";
+import BackTop from "../../components/public/BackTop/BackTop";
 export default {
   name: "index",
   data() {
@@ -17,7 +19,8 @@ export default {
   },
   components: {
     SectionOne,
-    SectionTwo
+    SectionTwo,
+    BackTop
   },
   methods: {
     openDetail() {
