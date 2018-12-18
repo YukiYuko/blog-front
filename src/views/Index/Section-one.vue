@@ -68,7 +68,7 @@
             </a>
           </li>
           <li>
-            <a flex justify="center" items="center" href="#" class="bt-icon">
+            <a @click="go('profile')" flex justify="center" items="center" href="#" class="bt-icon">
               <i class="iconfont icon-wode"></i>
             </a>
           </li>
@@ -473,9 +473,6 @@ export default {
   background-color: transparent;
   -webkit-backface-visibility: hidden;
   transition: border-width 0.3s, background-color 0.3s, height 0s 0.3s;
-  a {
-    display: block;
-  }
   &.bt-menu-open {
     height: 100%;
     border-width: 30px 90px 90px 30px;

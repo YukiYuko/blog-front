@@ -3,6 +3,7 @@ import Router from "vue-router";
 import Home from "./views/Home.vue";
 import Index from "./views/Index/Index.vue";
 import Detail from "./views/Index/detail.vue";
+import Profile from "./views/Profile/Profile.vue";
 
 Vue.use(Router);
 
@@ -14,6 +15,11 @@ export default new Router({
       path: "/",
       name: "home",
       component: Home
+    },
+    {
+      path: "/",
+      name: "profile",
+      component: Profile
     },
     {
       path: "/index",
