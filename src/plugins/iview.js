@@ -9,7 +9,8 @@ import {
   TabPane,
   Row,
   Col,
-  Card
+  Card,
+  Tag
 } from "iview";
 
 Vue.component("Button", Button);
@@ -20,6 +21,7 @@ Vue.component("TabPane", TabPane);
 Vue.component("Row", Row);
 Vue.component("Cols", Col);
 Vue.component("Card", Card);
+Vue.component("Tag", Tag);
 Vue.prototype.$Notice = Notice;
 Vue.prototype.$Loading = LoadingBar;
 Vue.prototype.$Modal = Modal;

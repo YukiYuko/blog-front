@@ -1,8 +1,9 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Home from "./views/Home.vue";
-import Index from "./views/Index/Index.vue";
+import Index from "./views/Index/Index2.vue";
 import Detail from "./views/Index/detail.vue";
+import Blog from "./views/Blog/Blog.vue";
 import Profile from "./views/Profile/Profile.vue";
 
 Vue.use(Router);
@@ -30,6 +31,11 @@ export default new Router({
       path: "/blog/:id",
       name: "blog",
       component: Detail
+    },
+    {
+      path: "/blog",
+      name: "blogIndex",
+      component: Blog
     },
     {
       path: "/about",

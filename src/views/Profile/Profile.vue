@@ -29,7 +29,6 @@
         <Tabs value="animation">
           <TabPane label="动漫推荐" name="animation">
             <div class="animation_tab">
-              <TabHead @select="select"></TabHead>
               <Row :gutter="16">
                 <Cols span="8" v-for="i in 6" :key="i">
                   <div class="animation_tab_item">
@@ -70,7 +69,6 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 import TabHead from "../../components/common/TabHead.vue";
-import { bangumi_get_user } from "../../ajax/bangumi";
 export default {
   name: "Profile",
   data() {
