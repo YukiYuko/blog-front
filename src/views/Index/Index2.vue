@@ -7,6 +7,7 @@
         :style="`background-image: url(${item.img})`"
         v-for="(item, index) in menu"
         :key="index"
+        @click="go(item.url)"
       >
         <div class="major">
           <h3>{{ item.title }}</h3>
@@ -28,7 +29,8 @@ export default {
         {
           img: require("../../assets/images/index/pic01.jpg"),
           title: "博客",
-          intro: "一些知识，见闻，吐槽"
+          intro: "一些知识，见闻，吐槽",
+          url: "blogIndex" // 路由的名字
         },
         {
           img: require("../../assets/images/index/pic02.jpg"),
@@ -90,8 +92,38 @@ export default {
       &:nth-child(3n) {
         width: 60%;
       }
-      &:nth-child(3n+1) {
+      &:nth-child(3n + 1) {
         width: 40%;
+      }
+      &:nth-child(1){
+        h3{
+          text-shadow: 0 0 5px #6fc3df, 0 0 10px #fff, 0 0 15px #fff;
+        }
+      }
+      &:nth-child(2){
+        h3{
+          text-shadow: 0 0 5px #8d82c4, 0 0 10px #fff, 0 0 15px #fff;
+        }
+      }
+      &:nth-child(3){
+        h3{
+          text-shadow: 0 0 5px #ec8d81, 0 0 10px #fff, 0 0 15px #fff;
+        }
+      }
+      &:nth-child(4){
+        h3{
+          text-shadow: 0 0 5px #e7b788, 0 0 10px #fff, 0 0 15px #fff;
+        }
+      }
+      &:nth-child(5){
+        h3{
+          text-shadow: 0 0 5px #8ea9e8, 0 0 10px #fff, 0 0 15px #fff;
+        }
+      }
+      &:nth-child(6){
+        h3{
+          text-shadow: 0 0 5px #87c5a4, 0 0 10px #fff, 0 0 15px #fff;
+        }
       }
       &:nth-child(1):before {
         background-color: #6fc3df;
@@ -136,12 +168,24 @@ export default {
         width: 100%;
         z-index: 1;
       }
+      &:hover{
+        .major{
+          h3{
+            transform: translateY(-10px);
+          }
+          p{
+            transform: translateY(10px);
+          }
+        }
+      }
       .major {
         color: #fff;
         position: relative;
         z-index: 3;
         h3 {
           font-size: 1.75em;
+          font-family: Audiowide;
+          transition: all 0.2s ease-in-out;
           &:after {
             content: "";
             background-color: #fff;
@@ -149,6 +193,7 @@ export default {
             height: 2px;
             margin: 0.325em 0 0.5em;
             width: 100%;
+            transition: all 0.2s ease-in-out;
           }
         }
         p {
@@ -157,9 +202,20 @@ export default {
           letter-spacing: 0.25em;
           margin-bottom: 0;
           text-transform: uppercase;
+          transition: all 0.2s ease-in-out;
         }
       }
     }
+  }
+}
+@keyframes neon3 {
+  0% {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #ffdd1b,
+      0 0 70px #ffdd1b, 0 0 80px #ffdd1b, 0 0 100px #ffdd1b, 0 0 150px #ffdd1b;
+  }
+  100% {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #ffdd1b,
+      0 0 35px #ffdd1b, 0 0 40px #ffdd1b, 0 0 50px #ffdd1b, 0 0 75px #ffdd1b;
   }
 }
 </style>
