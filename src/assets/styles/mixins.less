@@ -1,3 +1,4 @@
+@color: #e7e7e7;
 // px 转换 rem
 .getRem(@rem) {
   @getRem: @rem/72rem;
@@ -10,7 +11,7 @@
 
 // 按下去背景颜色
 // -----------------------------------------------------------------------------
-.tap-color(@color, @opacity: .9) {
+.tap-color(@color: #e7e7e7, @opacity: .9) {
   background-color: @color;
   &:active {
     background-color: @color * @opacity;
@@ -85,7 +86,7 @@
 
 // 一像素边框
 // -----------------------------------------------------------------------------
-.top-line(@color, @zindex: 0) {
+.top-line(@color: #e7e7e7, @zindex: 0) {
   content: '';
   position: absolute;
   z-index: @zindex;
@@ -99,7 +100,7 @@
   transform-origin: 0 0;
 }
 
-.bottom-line(@color, @zindex: 0) {
+.bottom-line(@color: #e7e7e7, @zindex: 0) {
   content: '';
   position: absolute;
   z-index: @zindex;
@@ -113,7 +114,7 @@
   transform-origin: 0 0;
 }
 
-.left-line(@color, @zindex: 0) {
+.left-line(@color: #e7e7e7, @zindex: 0) {
   content: '';
   position: absolute;
   z-index: @zindex;
@@ -127,7 +128,7 @@
   transform-origin: 0 0;
 }
 
-.right-line(@color, @zindex: 0) {
+.right-line(@color: #e7e7e7, @zindex: 0) {
   content: '';
   position: absolute;
   z-index: @zindex;
@@ -157,4 +158,22 @@
 
 .drop-shadow-left() {
   box-shadow: -4px 0 2px -2px rgba(0,0,0,0.05);
+}
+
+// 容器横纵比例
+// -----------------------------------------------------------------------------
+.fixed-aspect-rations(@height: 315, @width: 765) {
+  padding-top: (@height / @width) * 100%;
+  // 或者 padding-bottom: @height / @width * 100%;
+}
+// 容器横纵比例
+// -----------------------------------------------------------------------------
+.over-lay{
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-image: linear-gradient(rgba(255,255,255, 0.1), rgba(0,0,0,0.2));
 }

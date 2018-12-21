@@ -30,7 +30,9 @@
         <div class="app__text app__text--2">
           <div class="app__text-line app__text-line--4">各种番剧推荐</div>
           <div class="app__text-line app__text-line--3">不经典，不推荐！</div>
-          <div class="app__text-line app__text-line--2">这是博主看过的觉得非常好看的番！</div>
+          <div class="app__text-line app__text-line--2">
+            这是博主看过的觉得非常好看的番！
+          </div>
           <div class="app__text-line app__text-line--1">
             <img src="../../assets/images/blog/opus-attachment.png" alt="" />
           </div>
@@ -47,6 +49,83 @@
       </div>
     </div>
     <!-- banner 结束 -->
+    <!-- 内容 -->
+    <div class="blog-content">
+      <div class="container">
+        <Row :gutter="16">
+          <Cols span="16">
+            <div class="blog-content__left">
+              <div class="blog-content__left__list">
+                <div
+                  v-for="i in 6"
+                  :key="i"
+                  class="blog-content__left__list__item"
+                >
+                  <div class="blog-content__left__list__item--1">
+                    <img
+                      src="http://static.leiphone.com/uploads/new/article/pic/201812/5c1a32e9be3b3.jpg?imageMogr2/thumbnail/!765x315r/gravity/Center/crop/765x315/quality/90"
+                      alt=""
+                    />
+                  </div>
+                  <div class="blog-content__left__list__item--2">
+                    <div class="blog-content__left__list__item--2__title">
+                      护眼双屏再次升级，努比亚X星空典藏版图赏
+                    </div>
+                    <div class="blog-content__left__list__item--2__intro">
+                      简称“黑金蓝”典藏版。
+                    </div>
+                  </div>
+                  <div
+                    flex
+                    justify="between"
+                    items="center"
+                    class="blog-content__left__list__item--3"
+                  >
+                    <div class="avatar">
+                      <img
+                        src="../../assets/images/touxiang.png"
+                        width="25"
+                        height="25"
+                      />
+                      <span>凤凰院凶真</span>
+                    </div>
+                    <div flex="" items="center" box="4" class="tags">
+                      <a> <i class="iconfont icon-tag"></i> </a> <a>努比亚</a>
+                      <a>旗舰</a> <a>梵高</a> <a>512GB</a>
+                    </div>
+                    <div flex="" items="center" box="2" class="time">
+                      <i class="iconfont icon-shijian"></i>
+                      <span>2018-12-20 11:33</span>
+                    </div>
+                    <div flex="" items="center" class="discuss">
+                      <i class="iconfont icon-liuyan"></i> <span>23</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Cols>
+          <Cols span="8">
+            <div class="blog-content__right">
+              <div class="widget">
+                <input type="text" placeholder="Search...">
+                <div class="search"></div>
+              </div>
+              <div class="widget">
+                <div class="widget__title">热门文章</div>
+              </div>
+              <div class="widget">
+                <div class="widget__title">最新文章</div>
+              </div>
+              <div class="widget">
+                <div class="widget__title">随机文章</div>
+              </div>
+            </div>
+          </Cols>
+        </Row>
+      </div>
+    </div>
+    <!-- 内容结束 -->
   </div>
 </template>
 
@@ -110,6 +189,8 @@ export default {
 </script>
 
 <style lang="less" scoped>
+@import "../../assets/styles/var";
+@import "../../assets/styles/mixins";
 .blog {
   .blog-header {
     .blog-header__progress {
@@ -117,6 +198,210 @@ export default {
       height: 2px;
       background: #29d;
       -webkit-animation: hue 20s infinite linear;
+    }
+  }
+  .blog-content {
+    background-color: @background_color;
+    min-height: 2000px;
+    padding: 20px 0;
+    &__left {
+      min-height: 2000px;
+      &__list {
+        &__item {
+          background-color: #fff;
+          margin-bottom: 16px;
+          cursor: pointer;
+          &--1 {
+            .fixed-aspect-rations();
+            background-color: #e800a4;
+            height: 0;
+            position: relative;
+            img {
+              position: absolute;
+              left: 0;
+              top: 0;
+              width: 100%;
+              height: 100%;
+            }
+            &:after {
+              .over-lay;
+            }
+          }
+          &--2 {
+            padding: 20px;
+            position: relative;
+            &:after {
+              .bottom-line();
+            }
+            &:hover {
+              .blog-content__left__list__item--2__title {
+                text-indent: 15px;
+                color: #e800a4;
+              }
+            }
+            &__title {
+              font-size: 18px;
+              color: @title_color;
+              margin-bottom: 10px;
+              transition: all 0.1s ease-in-out;
+            }
+            &__intro {
+              color: @info_color;
+            }
+          }
+          &--3 {
+            padding: 10px 20px;
+            height: 45px;
+            line-height: 25px;
+            font-size: 13px;
+            color: @sub_color;
+            > div:not(:nth-last-child(1)) {
+              position: relative;
+              margin-right: 20px;
+              &:after {
+                .right-line();
+              }
+            }
+            .avatar {
+              padding-right: 20px;
+            }
+            .tags {
+              a {
+                color: @sub_color;
+                margin-right: 10px;
+              }
+            }
+            i {
+              font-size: 18px;
+              /*vertical-align: middle;*/
+              color: @sub_color;
+              margin-right: 5px;
+            }
+          }
+        }
+      }
+    }
+    &__right {
+      min-height: 1000px;
+      .widget {
+        background-color: #fff;
+        margin-bottom: 16px;
+        &__title {
+          font-size: 16px;
+          color: #333;
+          line-height: 50px;
+          height: 50px;
+          padding: 0 20px;
+          position: relative;
+          &:after {
+            .bottom-line();
+          }
+        }
+      }
+      .widget .search {
+        /*position: absolute;*/
+        margin: auto;
+        /*top: 0;*/
+        /*right: 0;*/
+        /*bottom: 0;*/
+        /*left: 0;*/
+        position: relative;
+        width: 80px;
+        height: 80px;
+        background: crimson;
+        border-radius: 50%;
+        transition: all 1s;
+        z-index: 4;
+        box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.4);
+      }
+      .widget .search:hover {
+        cursor: pointer;
+      }
+      .widget .search::before {
+        content: "";
+        position: absolute;
+        margin: auto;
+        top: 22px;
+        right: 0;
+        bottom: 0;
+        left: 22px;
+        width: 12px;
+        height: 2px;
+        background: white;
+        transform: rotate(45deg);
+        transition: all .5s;
+      }
+      .widget .search::after {
+        content: "";
+        position: absolute;
+        margin: auto;
+        top: -5px;
+        right: 0;
+        bottom: 0;
+        left: -5px;
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        border: 2px solid white;
+        transition: all .5s;
+      }
+      .widget input {
+        font-family: 'Inconsolata', monospace;
+        position: absolute;
+        margin: auto;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 50px;
+        height: 50px;
+        outline: none;
+        border: none;
+        background: crimson;
+        color: white;
+        text-shadow: 0 0 10px crimson;
+        padding: 0 80px 0 20px;
+        border-radius: 30px;
+        box-shadow: 0 0 25px 0 crimson, 0 20px 25px 0 rgba(0, 0, 0, 0.2);
+        transition: all 1s;
+        opacity: 0;
+        z-index: 5;
+        font-weight: bolder;
+        letter-spacing: 0.1em;
+      }
+      .widget input:hover {
+        cursor: pointer;
+      }
+      .widget input:focus {
+        width: 300px;
+        opacity: 1;
+        cursor: text;
+      }
+      .widget input:focus ~ .search {
+        right: -250px;
+        background: #151515;
+        z-index: 6;
+      }
+      .widget input:focus ~ .search::before {
+        top: 0;
+        left: 0;
+        width: 25px;
+      }
+      .widget input:focus ~ .search::after {
+        top: 0;
+        left: 0;
+        width: 25px;
+        height: 2px;
+        border: none;
+        background: white;
+        border-radius: 0%;
+        transform: rotate(-45deg);
+      }
+      .widget input::placeholder {
+        color: white;
+        opacity: 0.5;
+        font-weight: bolder;
+      }
     }
   }
 }

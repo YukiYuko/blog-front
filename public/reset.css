@@ -35,7 +35,14 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 100%;
 }
 
-img{ object-fit: cover; }
+img{
+  object-fit: cover;
+  vertical-align: middle;
+}
+img ~ span{
+  vertical-align: middle;
+  margin-left: 2px;
+}
 
 fieldset, img {
   border: 0;
@@ -109,7 +116,7 @@ textarea {
 
 /*一些公共css*/
 .container{
-  max-width: 1200px;
+  max-width: 1100px;
   position: relative;
   margin: auto;
 }
