@@ -107,9 +107,8 @@
           </Cols>
           <Cols span="8">
             <div class="blog-content__right">
-              <div class="widget">
-                <input type="text" placeholder="Search...">
-                <div class="search"></div>
+              <div class="widget widget__search">
+                <input class="search__input" type="text" placeholder="搜索">
               </div>
               <div class="widget">
                 <div class="widget__title">热门文章</div>
@@ -286,6 +285,7 @@ export default {
       .widget {
         background-color: #fff;
         margin-bottom: 16px;
+        position: relative;
         &__title {
           font-size: 16px;
           color: #333;
@@ -298,109 +298,40 @@ export default {
           }
         }
       }
-      .widget .search {
-        /*position: absolute;*/
-        margin: auto;
-        /*top: 0;*/
-        /*right: 0;*/
-        /*bottom: 0;*/
-        /*left: 0;*/
-        position: relative;
-        width: 80px;
-        height: 80px;
-        background: crimson;
-        border-radius: 50%;
-        transition: all 1s;
-        z-index: 4;
-        box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.4);
-      }
-      .widget .search:hover {
-        cursor: pointer;
-      }
-      .widget .search::before {
-        content: "";
-        position: absolute;
-        margin: auto;
-        top: 22px;
-        right: 0;
-        bottom: 0;
-        left: 22px;
-        width: 12px;
-        height: 2px;
-        background: white;
-        transform: rotate(45deg);
-        transition: all .5s;
-      }
-      .widget .search::after {
-        content: "";
-        position: absolute;
-        margin: auto;
-        top: -5px;
-        right: 0;
-        bottom: 0;
-        left: -5px;
-        width: 25px;
-        height: 25px;
-        border-radius: 50%;
-        border: 2px solid white;
-        transition: all .5s;
-      }
-      .widget input {
-        font-family: 'Inconsolata', monospace;
-        position: absolute;
-        margin: auto;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        width: 50px;
-        height: 50px;
-        outline: none;
-        border: none;
-        background: crimson;
-        color: white;
-        text-shadow: 0 0 10px crimson;
-        padding: 0 80px 0 20px;
-        border-radius: 30px;
-        box-shadow: 0 0 25px 0 crimson, 0 20px 25px 0 rgba(0, 0, 0, 0.2);
-        transition: all 1s;
-        opacity: 0;
-        z-index: 5;
-        font-weight: bolder;
-        letter-spacing: 0.1em;
-      }
-      .widget input:hover {
-        cursor: pointer;
-      }
-      .widget input:focus {
-        width: 300px;
-        opacity: 1;
-        cursor: text;
-      }
-      .widget input:focus ~ .search {
-        right: -250px;
-        background: #151515;
-        z-index: 6;
-      }
-      .widget input:focus ~ .search::before {
-        top: 0;
-        left: 0;
-        width: 25px;
-      }
-      .widget input:focus ~ .search::after {
-        top: 0;
-        left: 0;
-        width: 25px;
-        height: 2px;
-        border: none;
-        background: white;
-        border-radius: 0%;
-        transform: rotate(-45deg);
-      }
-      .widget input::placeholder {
-        color: white;
-        opacity: 0.5;
-        font-weight: bolder;
+      .widget.widget__search {
+        padding: 20px;
+        .search__input {
+          width: 100%;
+          padding: 12px 24px;
+          background-color: transparent;
+          transition: all 250ms ease-in-out;
+          font-size: 14px;
+          line-height: 18px;
+          color: #575756;
+          background-image: url(http://mihaeltomic.com/codepen/input-search/ic_search_black_24px.svg);
+          background-repeat: no-repeat;
+          background-size: 18px 18px;
+          background-position: 95% center;
+          border-radius: 50px;
+          border: 1px solid #575756;
+          backface-visibility: hidden;
+          transform-style: preserve-3d;
+        }
+        .search__input::placeholder {
+          color: rgba(87, 87, 86, 0.8);
+          text-transform: uppercase;
+          letter-spacing: 1.5px;
+        }
+
+        .search__input:hover,
+        .search__input:focus {
+          padding: 12px 0;
+          outline: 0;
+          border: 1px solid transparent;
+          border-bottom: 1px solid #575756;
+          border-radius: 0;
+          background-position: 100% center;
+        }
       }
     }
   }
