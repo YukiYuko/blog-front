@@ -57,22 +57,20 @@
             <div class="blog-content__left">
               <div class="blog-content__left__list">
                 <div
-                  v-for="i in 6"
-                  :key="i"
+                  @click="go('blog', { id: item._id });"
+                  v-for="(item, index) in list"
+                  :key="index"
                   class="blog-content__left__list__item"
                 >
                   <div class="blog-content__left__list__item--1">
-                    <img
-                      src="http://static.leiphone.com/uploads/new/article/pic/201812/5c1a32e9be3b3.jpg?imageMogr2/thumbnail/!765x315r/gravity/Center/crop/765x315/quality/90"
-                      alt=""
-                    />
+                    <img :src="item.image" alt="" />
                   </div>
                   <div class="blog-content__left__list__item--2">
                     <div class="blog-content__left__list__item--2__title">
-                      护眼双屏再次升级，努比亚X星空典藏版图赏
+                      {{ item.title }}
                     </div>
                     <div class="blog-content__left__list__item--2__intro">
-                      简称“黑金蓝”典藏版。
+                      {{ item.desc }}
                     </div>
                   </div>
                   <div
@@ -90,18 +88,28 @@
                       <span>凤凰院凶真</span>
                     </div>
                     <div flex="" items="center" box="4" class="tags">
-                      <a> <i class="iconfont icon-tag"></i> </a> <a>努比亚</a>
-                      <a>旗舰</a> <a>梵高</a> <a>512GB</a>
+                      <a> <i class="iconfont icon-tag"></i> </a>
+                      <a
+                        v-for="(tag, tag_index) in item.tags"
+                        :key="tag_index"
+                        >{{ tag }}</a
+                      >
                     </div>
                     <div flex="" items="center" box="2" class="time">
                       <i class="iconfont icon-shijian"></i>
-                      <span>2018-12-20 11:33</span>
+                      <span>{{ item.createdAt | getDate("year") }}</span>
                     </div>
                     <div flex="" items="center" class="discuss">
                       <i class="iconfont icon-liuyan"></i> <span>23</span>
                     </div>
                   </div>
                 </div>
+              </div>
+              <div
+                id="pager"
+                style="text-align: center;margin: 70px 0 0;position: relative;"
+              >
+                <FrameBtn @click="_getNews" :text="loadMoreText"></FrameBtn>
               </div>
             </div>
           </Cols>
@@ -131,59 +139,107 @@
 <script>
 import HeadBar from "./components/HeadBar";
 import $ from "../../lib/classie";
+import { getNews } from "../../ajax/api";
+import FrameBtn from "../../components/public/FrameBtn/FrameBtn";
 export default {
   name: "Blog",
   data() {
-    return {};
+    return {
+      page: 1,
+      limit: 10,
+      list: [],
+      loadMoreText: "加载更多",
+      hasMore: true,
+      show_modal: false,
+      current: "",
+      id: "",
+      show_detail: false
+    };
   },
   components: {
-    HeadBar
+    HeadBar,
+    FrameBtn
   },
   mounted() {
-    let $app = document.querySelector(".app");
-    let animation = true;
-    let curSlide = 1;
-    let scrolledUp = void 0,
-      nextSlide = void 0;
-    let pagination = function(slide, target) {
-      animation = true;
-      if (target === undefined) {
-        nextSlide = scrolledUp ? slide - 1 : slide + 1;
-      } else {
-        nextSlide = target;
+    this.init_anime();
+    this._getNews();
+  },
+  methods: {
+    _getNews() {
+      if (!this.hasMore) {
+        return false;
       }
-      $.addClass(
-        document.querySelector(".pages__item--" + nextSlide),
-        "page__item-active"
-      );
-      $.removeClass(
-        document.querySelector(".pages__item--" + slide),
-        "page__item-active"
-      );
-      $.toggleClass($app, "active");
+      console.log(this);
+      this.loadMoreText = "加载中";
+      this.$insProgress.start();
+      getNews({ page: this.page, limit: this.limit })
+        .then(res => {
+          const { data } = res;
+          if (data.data.length) {
+            this.list = [...this.list, ...data.data];
+            if (data.data.length < this.limit) {
+              this.loadMoreText = "没有更多啦!";
+              this.hasMore = false;
+            } else {
+              this.page++;
+              this.loadMoreText = "加载更多";
+              this.hasMore = true;
+            }
+          } else {
+            this.loadMoreText = "没有更多啦!";
+            this.hasMore = false;
+          }
+          this.$insProgress.finish();
+        })
+        .catch(() => {
+          this.$insProgress.finish();
+        });
+    },
+    init_anime() {
+      let $app = document.querySelector(".app");
+      let animation = true;
+      let curSlide = 1;
+      let scrolledUp = void 0,
+        nextSlide = void 0;
+      let pagination = function(slide, target) {
+        animation = true;
+        if (target === undefined) {
+          nextSlide = scrolledUp ? slide - 1 : slide + 1;
+        } else {
+          nextSlide = target;
+        }
+        $.addClass(
+          document.querySelector(".pages__item--" + nextSlide),
+          "page__item-active"
+        );
+        $.removeClass(
+          document.querySelector(".pages__item--" + slide),
+          "page__item-active"
+        );
+        $.toggleClass($app, "active");
+        setTimeout(() => {
+          animation = false;
+        }, 3000);
+      };
+      setTimeout(() => {
+        $.addClass($app, "initial");
+      }, 500);
       setTimeout(() => {
         animation = false;
-      }, 3000);
-    };
-    setTimeout(() => {
-      $.addClass($app, "initial");
-    }, 500);
-    setTimeout(() => {
-      animation = false;
-    }, 4500);
-    let dom = document.querySelectorAll(".pages__item");
-    for (let i = 0; i < dom.length; i++) {
-      dom[i].addEventListener("click", function() {
-        if ($.hasClass(this, "page__item-active")) return;
-        if (animation) return;
-        // + 号是转化成数字
-        let target = +this.getAttribute("data-target");
-        pagination(curSlide, target);
-        curSlide = target;
-      });
+      }, 4500);
+      let dom = document.querySelectorAll(".pages__item");
+      for (let i = 0; i < dom.length; i++) {
+        dom[i].addEventListener("click", function() {
+          if ($.hasClass(this, "page__item-active")) return;
+          if (animation) return;
+          // + 号是转化成数字
+          let target = +this.getAttribute("data-target");
+          pagination(curSlide, target);
+          curSlide = target;
+        });
+      }
     }
-  },
-  methods: {}
+  }
 };
 </script>
 
@@ -246,6 +302,7 @@ export default {
             }
             &__intro {
               color: @info_color;
+              .line-clamp();
             }
           }
           &--3 {

@@ -8,14 +8,15 @@
 export default {
   name: "BackTop",
   props: {
-    scrollTop: {
+    defaultTop: {
       type: Number,
       default: 300
     }
   },
   data() {
     return {
-      toTopShow: false
+      toTopShow: false,
+      scrollTop: 0
     };
   },
   methods: {
@@ -23,7 +24,7 @@ export default {
       //首先修改相对滚动位置
       this.scrollTop = this.scrollTop =
         window.pageYOffset || document.body.scrollTop;
-      if (this.scrollTop > this.scrollTop) {
+      if (this.scrollTop > this.defaultTop) {
         this.toTopShow = true;
       } else {
         this.toTopShow = false;
