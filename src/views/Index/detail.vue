@@ -38,19 +38,54 @@
             <FrameBtn @click="show_discuss = true;" text="发表留言"></FrameBtn>
           </div>
           <div class="detail_discuss_input">
-            <div class="detail_discuss_input_num">17条评论</div>
-            <div class="detail_discuss_input_input">
-              <c-input
-                v-model="discuss"
-                type="textarea"
-                :autosize="{ minRows: 4 }"
-                placeholder="说点儿什么吧..."
-              />
+            <div class="detail_discuss_input_num">
+              {{ comments.length }}条评论
             </div>
-            <div class="detail_discuss_input_btn">
+            <!-- <div class="detail_discuss_input_input"> -->
+            <!-- <c-input -->
+            <!-- v-model="discuss" -->
+            <!-- type="textarea" -->
+            <!-- :autosize="{ minRows: 4 }" -->
+            <!-- placeholder="说点儿什么吧..." -->
+            <!-- /> -->
+            <!-- </div> -->
+            <!-- <div class="detail_discuss_input_btn"> -->
+            <!--
               <c-button @click="submit_discuss" type="primary" size="large">
-                发表评论
-              </c-button>
+            -->
+            <!-- 发表评论 -->
+            <!-- </c-button> -->
+            <!-- </div> -->
+          </div>
+        </div>
+        <!-- comments -->
+        <div class="detail_comments">
+          <div class="detail_comments_list">
+            <div
+              class="detail_comments_list_item"
+              flex=""
+              v-for="(item, index) in comments"
+              :key="index"
+            >
+              <div class="detail_comments_list_item_image">
+                <img :src="item.headImage" alt="" />
+              </div>
+              <div class="detail_comments_list_item_text" box="1">
+                <div
+                  class="detail_comments_list_item_text_title"
+                  flex
+                  justify="between"
+                >
+                  <h3>{{ item.name }}</h3>
+                  <span>{{ comments.length - index }} L</span>
+                </div>
+                <div class="detail_comments_list_item_text_cont">
+                  {{ item.desc }}
+                </div>
+                <div class="detail_comments_list_item_text_time">
+                  {{ item.createdAt | getDate }} <a>回复</a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -59,12 +94,7 @@
     <!-- 返回顶部 -->
     <BackTop></BackTop>
     <!-- 发表留言 -->
-    <Modal
-      v-model="show_discuss"
-      title="发表留言"
-      :loading="loading"
-      @on-ok="submit_visitor('formValidate')"
-    >
+    <Modal v-model="show_discuss" title="发表留言">
       <c-form
         ref="formValidate"
         :model="formValidate"
@@ -89,31 +119,44 @@
           />
         </FormItem>
         <FormItem label="QQ" prop="qq">
-          <c-input v-model="formValidate.qq" placeholder="QQ不会被公开显示" />
+          <c-input
+            v-model.number="formValidate.qq"
+            placeholder="QQ不会被公开显示"
+          />
         </FormItem>
         <FormItem label="url" prop="url">
           <c-input
-            v-model="formValidate.qq"
+            v-model="formValidate.url"
             placeholder="Url会被当做昵称的外链使用,您可以放置您的个人博客于此"
           />
         </FormItem>
       </c-form>
+      <div slot="footer">
+        <c-button size="large" @click="cancel_visitor('formValidate');"
+          >取消</c-button
+        >
+        <c-button
+          type="primary"
+          size="large"
+          :loading="loading"
+          @click="submit_visitor('formValidate');"
+          >确定</c-button
+        >
+      </div>
     </Modal>
   </div>
 </template>
 
 <script>
-import { getNewsDetail } from "../../ajax/api";
+import { getNewsDetail, commentCreate, getComment } from "../../ajax/api";
 import Code from "../../components/common/QRCode";
 import BackTop from "../../components/public/BackTop/BackTop";
 import FrameBtn from "../../components/public/FrameBtn/FrameBtn";
 export default {
   name: "detail",
-  props: {
-    id: String
-  },
   data() {
     return {
+      id: "",
       formValidate: {
         name: "",
         mail: "",
@@ -125,20 +168,38 @@ export default {
         name: [
           {
             required: true,
-            message: "The name cannot be empty",
+            message: "请输入昵称",
+            trigger: "blur"
+          }
+        ],
+        mail: [
+          {
+            required: false,
+            type: "email",
+            message: "请输入正确的邮箱号码",
+            trigger: "blur"
+          }
+        ],
+        qq: [
+          {
+            required: false,
+            type: "number",
+            message: "请输入正确的QQ号码",
+            trigger: "blur"
+          }
+        ],
+        url: [
+          {
+            required: false,
+            type: "url",
+            message: "请输入正确的链接地址",
             trigger: "blur"
           }
         ],
         desc: [
           {
             required: true,
-            message: "Please enter a personal introduction",
-            trigger: "blur"
-          },
-          {
-            type: "string",
-            min: 20,
-            message: "Introduce no less than 20 words",
+            message: "说点儿什么吧~",
             trigger: "blur"
           }
         ]
@@ -148,7 +209,9 @@ export default {
       scrollVal: 0,
       loading: false,
       discuss: "",
-      show_discuss: false
+      show_discuss: false,
+      isLogin: false,
+      comments: []
     };
   },
   computed: {
@@ -164,22 +227,20 @@ export default {
     BackTop,
     FrameBtn
   },
+  created() {
+    this.id = this.$route.params.id || "";
+  },
   mounted() {
     this.getData();
-    // document.getElementById("code").addEventListener("hover", () => {
-    //   this.show_code = true
-    // });
+    this._getComment();
     this.scroll();
   },
   methods: {
     getData() {
-      let id = this.id || this.$route.params.id || "";
-      if (id) {
-        getNewsDetail({ id: id }).then(res => {
-          const { data } = res;
-          this.detail = data;
-        });
-      }
+      getNewsDetail({ id: this.id }).then(res => {
+        const { data } = res;
+        this.detail = data;
+      });
     },
     scroll() {
       window.addEventListener("scroll", () => {
@@ -198,10 +259,34 @@ export default {
     submit_visitor(name) {
       this.$refs[name].validate(valid => {
         if (valid) {
-          this.$Message.success("Success!");
+          let userId = this.isLogin ? "" : "5c218aee694151792ad0ed99";
+          let data = {
+            ...this.formValidate,
+            newsId: this.$route.params.id,
+            userId
+          };
+          commentCreate(data).then(res => {
+            this.$Message.success(res.info);
+            this.show_discuss = false;
+            this.handleReset(name);
+            this.comments.unshift(res.data);
+          });
         } else {
-          this.$Message.error("Fail!");
+          this.$Message.error("请填写相关信息!");
         }
+      });
+    },
+    cancel_visitor() {
+      this.show_discuss = false;
+    },
+    handleReset(name) {
+      this.$refs[name].resetFields();
+    },
+    // 获取评论
+    _getComment() {
+      getComment({ newsId: this.id }).then(res => {
+        const data = res.data;
+        this.comments = [...this.comments, ...data];
       });
     }
   }
@@ -209,6 +294,8 @@ export default {
 </script>
 
 <style lang="less">
+@import "../../assets/styles/var";
+@import "../../assets/styles/mixins";
 .detail {
   /*position: fixed;*/
   /*left: 0;*/
@@ -301,6 +388,7 @@ export default {
     }
   }
   .detail_discuss {
+    margin-bottom: 30px;
     &_btn {
       padding: 20px 0;
       text-align: center;
@@ -316,6 +404,51 @@ export default {
       }
       &_btn {
         text-align: right;
+      }
+    }
+  }
+  .detail_comments {
+    &_list {
+      &_item {
+        padding: 20px 0;
+        position: relative;
+        &:before {
+          .bottom-line();
+        }
+        &_image {
+          width: 70px;
+          height: 70px;
+          margin-right: 20px;
+          img {
+            width: 100%;
+            height: 100%;
+          }
+        }
+        &_text {
+          &_title {
+            margin-bottom: 10px;
+            h3 {
+              font-size: 16px;
+              color: @title_color;
+            }
+            span {
+              font-size: 12px;
+              color: @sub_color;
+            }
+          }
+          &_cont {
+            font-size: 14px;
+            padding-bottom: 25px;
+            color: @info_color;
+          }
+          &_time {
+            color: @sub_color;
+            a {
+              margin-left: 20px;
+              color: @active_color;
+            }
+          }
+        }
       }
     }
   }

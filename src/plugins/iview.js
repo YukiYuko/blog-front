@@ -14,7 +14,10 @@ import {
   Input,
   Message,
   Form,
-  FormItem
+  FormItem,
+  Scroll,
+  Spin,
+  Icon
 } from "iview";
 
 Vue.component("CButton", Button);
@@ -29,6 +32,9 @@ Vue.component("Tag", Tag);
 Vue.component("CInput", Input);
 Vue.component("CForm", Form);
 Vue.component("FormItem", FormItem);
+Vue.component("CScroll", Scroll);
+Vue.component("Spin", Spin);
+Vue.component("Icon", Icon);
 Vue.prototype.$Notice = Notice;
 Vue.prototype.$Loading = LoadingBar;
 Vue.prototype.$Modal = Modal;
