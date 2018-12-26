@@ -29,8 +29,11 @@ export const getNewsDetail = data =>
  * */
 export const commentCreate = data =>
   api.post(base_url + "/comment/create", data);
+export const commentUpdate = data =>
+  api.post(base_url + "/comment/update", data);
 /*
  * 获取文章下的评论
  * @params id: 新闻ID
+ * @params page: 当前页数
  * */
 export const getComment = data => api.post(base_url + "/comment/list", data);

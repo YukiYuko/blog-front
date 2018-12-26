@@ -19,6 +19,7 @@
     "v-contextmenu": "^2.8.0",
     "vue": "^2.5.17",
     "vue-cli-plugin-iview": "^1.0.6",
+    "vue-infinite-loading": "^2.4.3",
     "vue-ins-progress-bar": "^1.0.0",
     "vue-lazyload": "^1.2.6",
     "vue-router": "^3.0.1",

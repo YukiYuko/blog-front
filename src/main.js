@@ -5,6 +5,7 @@ import store from "./store";
 import VueLazyload from "vue-lazyload";
 import contentmenu from "v-contextmenu";
 import VueInsProgressBar from "vue-ins-progress-bar";
+import InfiniteLoading from "vue-infinite-loading";
 import "v-contextmenu/dist/index.css";
 import "./plugins/iview.js";
 import filters from "./filter";
@@ -40,6 +41,20 @@ const options = {
 };
 
 Vue.use(VueInsProgressBar, options);
+Vue.use(InfiniteLoading, {
+  slots: {
+    // keep default styles
+    noResults: "这里还没有数据daze~",
+
+    // remove default styles
+    noMore: "没有更多了┑(￣Д ￣)┍",
+
+    // hide slot
+    error: {
+      render: h => h("div")
+    }
+  }
+});
 
 new Vue({
   router,

@@ -35,12 +35,10 @@
 
         <div class="detail_discuss">
           <div class="detail_discuss_btn">
-            <FrameBtn @click="show_discuss = true;" text="发表留言"></FrameBtn>
+            <FrameBtn @click="open_discuss" text="发表留言"></FrameBtn>
           </div>
           <div class="detail_discuss_input">
-            <div class="detail_discuss_input_num">
-              {{ comments.length }}条评论
-            </div>
+            <div class="detail_discuss_input_num">{{ total }}条评论</div>
             <!-- <div class="detail_discuss_input_input"> -->
             <!-- <c-input -->
             <!-- v-model="discuss" -->
@@ -83,24 +81,59 @@
                   {{ item.desc }}
                 </div>
                 <div class="detail_comments_list_item_text_time">
-                  {{ item.createdAt | getDate }} <a>回复</a>
+                  {{ item.createdAt | getDate }}
+                  <a @click="reply_fun(item, item._id);">回复</a>
+                </div>
+                <div
+                  v-show="item.reply && item.reply.length"
+                  class="detail_comments_list_item_text_reply"
+                  flex
+                  v-for="(reply_item, reply_key) in item.reply"
+                  :key="reply_key"
+                >
+                  <div class="detail_comments_list_item_image">
+                    <img :src="reply_item.headImage" alt="" />
+                  </div>
+                  <div class="detail_comments_list_item_text">
+                    <div
+                      class="detail_comments_list_item_text_title"
+                      flex
+                      justify="between"
+                    >
+                      <h3>
+                        <span>@{{ reply_item.name }}</span> 回复
+                        <span>@{{ reply_item.answer.name }}</span>
+                      </h3>
+                    </div>
+                    <div class="detail_comments_list_item_text_cont">
+                      {{ reply_item.desc }}
+                    </div>
+                    <div class="detail_comments_list_item_text_time">
+                      {{ reply_item.createdAt | getDate }}
+                      <a @click="reply_fun(reply_item, item._id);">回复</a>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+          <infinite-loading @infinite="_getComment"></infinite-loading>
         </div>
       </div>
     </div>
     <!-- 返回顶部 -->
     <BackTop></BackTop>
     <!-- 发表留言 -->
-    <Modal v-model="show_discuss" title="发表留言">
+    <Modal draggable v-model="show_discuss" title="发表留言">
       <c-form
         ref="formValidate"
         :model="formValidate"
         :rules="ruleValidate"
         :label-width="80"
       >
+        <div v-if="reply" class="reply_tips">
+          回复<a>@{{ reply.name }}:</a>
+        </div>
         <FormItem label="说点什么" prop="desc">
           <c-input
             v-model="formValidate.desc"
@@ -148,7 +181,12 @@
 </template>
 
 <script>
-import { getNewsDetail, commentCreate, getComment } from "../../ajax/api";
+import {
+  getNewsDetail,
+  commentCreate,
+  getComment,
+  commentUpdate
+} from "../../ajax/api";
 import Code from "../../components/common/QRCode";
 import BackTop from "../../components/public/BackTop/BackTop";
 import FrameBtn from "../../components/public/FrameBtn/FrameBtn";
@@ -157,6 +195,7 @@ export default {
   data() {
     return {
       id: "",
+      reply: "",
       formValidate: {
         name: "",
         mail: "",
@@ -211,7 +250,10 @@ export default {
       discuss: "",
       show_discuss: false,
       isLogin: false,
-      comments: []
+      comments: [],
+      total: 0,
+      page: 1,
+      pid: ""
     };
   },
   computed: {
@@ -263,7 +305,9 @@ export default {
           let data = {
             ...this.formValidate,
             newsId: this.$route.params.id,
-            userId
+            userId,
+            pid: this.pid,
+            answer: this.reply
           };
           commentCreate(data).then(res => {
             this.$Message.success(res.info);
@@ -283,11 +327,35 @@ export default {
       this.$refs[name].resetFields();
     },
     // 获取评论
-    _getComment() {
-      getComment({ newsId: this.id }).then(res => {
-        const data = res.data;
-        this.comments = [...this.comments, ...data];
+    _getComment($state) {
+      let params = {
+        page: this.page,
+        newsId: this.id
+      };
+      getComment(params).then(res => {
+        const { data } = res.data;
+        if (data.length) {
+          setTimeout(() => {
+            this.page += 1;
+            this.comments = [...this.comments, ...data];
+            this.total = res.data.total;
+            $state.loaded();
+          }, 500);
+        } else {
+          $state.complete();
+        }
       });
+    },
+    open_discuss() {
+      this.reply = "";
+      this.pid = "";
+      this.show_discuss = true;
+    },
+    // 回复别人
+    reply_fun(item, id) {
+      this.pid = id;
+      this.reply = item;
+      this.show_discuss = true;
     }
   }
 };
@@ -409,6 +477,7 @@ export default {
   }
   .detail_comments {
     &_list {
+      margin-bottom: 20px;
       &_item {
         padding: 20px 0;
         position: relative;
@@ -430,6 +499,9 @@ export default {
             h3 {
               font-size: 16px;
               color: @title_color;
+              span{
+                color: #3680E8;
+              }
             }
             span {
               font-size: 12px;
@@ -448,9 +520,19 @@ export default {
               color: @active_color;
             }
           }
+          &_reply {
+            padding-top: 20px;
+          }
         }
       }
     }
+  }
+}
+.reply_tips {
+  margin-bottom: 10px;
+  font-size: 14px;
+  a {
+    color: @active_color;
   }
 }
 </style>

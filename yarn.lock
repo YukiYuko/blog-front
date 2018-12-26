@@ -7803,6 +7803,11 @@ vue-hot-reload-api@^2.3.0:
   resolved "http://registry.npm.taobao.org/vue-hot-reload-api/download/vue-hot-reload-api-2.3.1.tgz#b2d3d95402a811602380783ea4f566eb875569a2"
   integrity sha1-stPZVAKoEWAjgHg+pPVm64dVaaI=
 
+vue-infinite-loading@^2.4.3:
+  version "2.4.3"
+  resolved "https://registry.yarnpkg.com/vue-infinite-loading/-/vue-infinite-loading-2.4.3.tgz#fa34131a5c70c933b420d302e2a6dccf65095e17"
+  integrity sha512-CKITl7I1cb3X4zIHbVSyrupPTs9XxZGVV/N+P5lSxSrGW+D92gq6zuTy/XnvJOwMRkjJuiotJAQrgv+gOwSx3g==
+
 vue-ins-progress-bar@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/vue-ins-progress-bar/-/vue-ins-progress-bar-1.0.0.tgz#97dca91838f29ec318cebb41ddbf4f651a05c60b"
