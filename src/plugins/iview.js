@@ -17,7 +17,8 @@ import {
   FormItem,
   Scroll,
   Spin,
-  Icon
+  Icon,
+  Switch
 } from "iview";
 
 Vue.component("CButton", Button);
@@ -35,6 +36,7 @@ Vue.component("FormItem", FormItem);
 Vue.component("CScroll", Scroll);
 Vue.component("Spin", Spin);
 Vue.component("Icon", Icon);
+Vue.component("CSwitch", Switch);
 Vue.prototype.$Notice = Notice;
 Vue.prototype.$Loading = LoadingBar;
 Vue.prototype.$Modal = Modal;

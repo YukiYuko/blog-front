@@ -5,6 +5,7 @@ import Index from "./views/Index/Index2.vue";
 import Detail from "./views/Index/detail.vue";
 import Blog from "./views/Blog/Blog.vue";
 import Profile from "./views/Profile/Profile.vue";
+import Login from "./views/Blog/Login.vue";
 
 Vue.use(Router);
 
@@ -16,6 +17,11 @@ export default new Router({
       path: "/",
       name: "home",
       component: Home
+    },
+    {
+      path: "/login",
+      name: "login",
+      component: Login
     },
     {
       path: "/profile",

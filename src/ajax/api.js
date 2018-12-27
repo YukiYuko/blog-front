@@ -1,7 +1,19 @@
 import api from "./index";
 import jsonp from "./jsonp";
 const biying = "https://bing.ioliu.cn/v1";
-const base_url = "http://192.168.199.175:3002";
+const base_url = "http://localhost:3002";
+/*
+ * 注册
+ * */
+export const register = data => api.post(base_url + "/users/register", data);
+/*
+ * 登陆
+ * */
+export const login = data => api.post(base_url + "/users/login", data);
+/*
+ * 获取验证码
+ * */
+export const checkcode = () => api.get(base_url + "/other/checkcode");
 /*
  * 获取必应地址
  * */

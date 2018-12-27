@@ -1,6 +1,7 @@
 //引入axios
 import axios from "axios";
 import { Message } from "iview";
+import store from "../store";
 
 let cancel,
   promiseArr = {};
@@ -9,11 +10,16 @@ const CancelToken = axios.CancelToken;
 axios.interceptors.request.use(
   config => {
     //发起请求时，取消掉当前正在进行的相同请求
-    if (promiseArr[config.url]) {
-      promiseArr[config.url]("操作取消");
-      promiseArr[config.url] = cancel;
-    } else {
-      promiseArr[config.url] = cancel;
+    // if (promiseArr[config.url]) {
+    //   promiseArr[config.url]("操作取消");
+    //   promiseArr[config.url] = cancel;
+    // } else {
+    //   promiseArr[config.url] = cancel;
+    // }
+    // 每次发送请求，检查 vuex 中是否有token,如果有放在headers中
+    console.log("config", store.state.token)
+    if(store.state.token){
+      config.headers.Authorization = store.state.token;
     }
     return config;
   },
@@ -86,7 +92,7 @@ axios.interceptors.response.use(
   }
 );
 
-axios.defaults.baseURL = "/api";
+// axios.defaults.baseURL = "/api";
 //设置默认请求头
 // axios.defaults.headers = {
 //   "X-Requested-With": "XMLHttpRequest"
