@@ -182,6 +182,7 @@
 
 <script>
 import { getNewsDetail, commentCreate, getComment } from "../../ajax/api";
+import { getScrollTop } from "../../lib/index";
 import Code from "../../components/common/QRCode";
 import BackTop from "../../components/public/BackTop/BackTop";
 import FrameBtn from "../../components/public/FrameBtn/FrameBtn";
@@ -253,9 +254,10 @@ export default {
   },
   computed: {
     width() {
-      let w = window.innerWidth;
+      let w = document.body.clientWidth;
       let h = document.body.clientHeight;
-      let _w = (this.scrollVal / h) * w;
+      // 为什么减去window.innerHight ? 因为初始的时候就有一屏幕的高度的, 滚动条是在此基础上进行的滚动
+      let _w = (this.scrollVal / (h - window.innerHeight)) * w;
       return _w + "px";
     }
   },
@@ -280,8 +282,7 @@ export default {
     },
     scroll() {
       window.addEventListener("scroll", () => {
-        let scrollVal = window.document.documentElement.scrollTop;
-        this.scrollVal = scrollVal;
+        this.scrollVal = getScrollTop();
       });
     },
     loadDiscuss() {
