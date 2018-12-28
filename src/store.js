@@ -8,7 +8,9 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     bgImg: "",
-    token: getStorage("token") || ""
+    token: getStorage("token") || "",
+    user_id: getStorage("user_id") || "",
+    userInfo: getStorage("userInfo") || {}
   },
   mutations: {
     setBgImg(state, img) {
@@ -17,11 +19,17 @@ export default new Vuex.Store({
     },
     save(state, data) {
       state.token = data.token;
+      state.user_id = data._id;
+      if (data.userInfo) {
+        state.userInfo = { ...state.userInfo, ...data.userInfo };
+      }
     }
   },
   getters: {
     bgImg: state => state.bgImg,
-    token: state => state.token
+    token: state => state.token,
+    user_id: state => state.user_id,
+    userInfo: state => state.userInfo
   },
   actions: {
     getBgImg({ state, commit }) {

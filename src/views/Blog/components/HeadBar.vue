@@ -65,6 +65,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 export default {
   name: "HeadBar",
   data() {
@@ -80,11 +81,16 @@ export default {
       color_new: []
     };
   },
+  computed: {
+    ...mapGetters(["user_id"])
+  },
   mounted() {
     // this.colors = this.shuffle(this.colors);
     this.colors = this.shuffle(this.colors);
+    console.log(this.user_id);
   },
   methods: {
+    ...mapActions(["save"]),
     // 乱序
     shuffle(a) {
       let len = a.length;

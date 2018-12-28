@@ -153,8 +153,7 @@ export default {
       remember: false,
       isReg: false,
       img_base64: "",
-      code: "",
-      code_token: ""
+      code: ""
     };
   },
   computed: {
@@ -176,8 +175,7 @@ export default {
       let params = {
         userName: this.userName,
         password: this.password,
-        code: this.code,
-        code_token: this.code_token
+        code: this.code
       };
       if (type === "isLogin") {
         if (!this.userName || !this.password) {
@@ -187,9 +185,11 @@ export default {
         login(params).then(res => {
           this.$Message.success(res.info);
           // 保存登陆状态
-          this.save(res);
-          setStorage("token", res.token);
+          this.save(res.data);
+          setStorage("token", res.data.token);
+          setStorage("user_id", res.data._id);
           this.isReg = false;
+          this.go("blogIndex");
         });
       } else {
         if (!checkStr(this.userName, "name")) {
@@ -213,7 +213,6 @@ export default {
       let res = await checkcode();
       let { data = {} } = res;
       this.img_base64 = data.img;
-      this.code_token = data.token;
     }
   }
 };

@@ -75,7 +75,7 @@
                   justify="between"
                 >
                   <h3>{{ item.name }}</h3>
-                  <span>{{ comments.length - index }} L</span>
+                  <span>{{ item.floor }} L</span>
                 </div>
                 <div class="detail_comments_list_item_text_cont">
                   {{ item.desc }}
@@ -117,10 +117,10 @@
               </div>
             </div>
           </div>
-          <infinite-loading @infinite="_getComment"></infinite-loading>
         </div>
       </div>
     </div>
+    <infinite-loading @infinite="_getComment"></infinite-loading>
     <!-- 返回顶部 -->
     <BackTop></BackTop>
     <!-- 发表留言 -->
@@ -181,12 +181,7 @@
 </template>
 
 <script>
-import {
-  getNewsDetail,
-  commentCreate,
-  getComment,
-  commentUpdate
-} from "../../ajax/api";
+import { getNewsDetail, commentCreate, getComment } from "../../ajax/api";
 import Code from "../../components/common/QRCode";
 import BackTop from "../../components/public/BackTop/BackTop";
 import FrameBtn from "../../components/public/FrameBtn/FrameBtn";
@@ -274,7 +269,6 @@ export default {
   },
   mounted() {
     this.getData();
-    this._getComment();
     this.scroll();
   },
   methods: {
@@ -307,13 +301,22 @@ export default {
             newsId: this.$route.params.id,
             userId,
             pid: this.pid,
-            answer: this.reply
+            answer: {
+              name: this.reply.name
+            }
           };
           commentCreate(data).then(res => {
             this.$Message.success(res.info);
             this.show_discuss = false;
             this.handleReset(name);
-            this.comments.unshift(res.data);
+            if (!this.reply) {
+              this.comments.unshift(res.data);
+            } else {
+              let parent = this.comments.filter(
+                item => item._id === this.reply.pid
+              );
+              parent[0].reply.push(res.data);
+            }
           });
         } else {
           this.$Message.error("请填写相关信息!");
@@ -372,7 +375,8 @@ export default {
   /*bottom: 0;*/
   background-color: #fff;
   z-index: 1000;
-  padding-top: 50px;
+  padding: 50px 0;
+  min-height: 100vh;
   .detail_head {
     height: 50px;
     text-align: center;
@@ -499,8 +503,8 @@ export default {
             h3 {
               font-size: 16px;
               color: @title_color;
-              span{
-                color: #3680E8;
+              span {
+                color: #3680e8;
               }
             }
             span {

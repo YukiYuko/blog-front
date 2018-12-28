@@ -2,6 +2,7 @@
 import axios from "axios";
 import { Message } from "iview";
 import store from "../store";
+import { getCookie } from "../lib/cookies";
 
 let cancel,
   promiseArr = {};
@@ -17,9 +18,8 @@ axios.interceptors.request.use(
     //   promiseArr[config.url] = cancel;
     // }
     // 每次发送请求，检查 vuex 中是否有token,如果有放在headers中
-    console.log("config", store.state.token)
-    if(store.state.token){
-      config.headers.Authorization = store.state.token;
+    if (store.state.token) {
+      config.headers.Authorization = "Bearer " + store.state.token;
     }
     return config;
   },
@@ -41,7 +41,6 @@ axios.interceptors.response.use(
     }
   },
   error => {
-    console.log("error", error);
     if (error && error.response) {
       switch (error.response.status) {
         case 400:
@@ -86,7 +85,7 @@ axios.interceptors.response.use(
     } else {
       error.message = "连接到服务器失败";
     }
-    Message.error(error);
+    Message.error(error.message);
     // alert(error);
     return Promise.resolve(error.response);
   }
@@ -98,7 +97,7 @@ axios.interceptors.response.use(
 //   "X-Requested-With": "XMLHttpRequest"
 // };
 axios.defaults.timeout = 10000;
-
+axios.defaults.withCredentials = true;
 export default {
   //get请求
   get(url, param) {
