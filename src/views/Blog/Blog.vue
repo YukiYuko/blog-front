@@ -147,7 +147,7 @@ export default {
   data() {
     return {
       page: 1,
-      limit: 10,
+      limit: 5,
       list: [],
       loadMoreText: "加载更多",
       hasMore: true,
