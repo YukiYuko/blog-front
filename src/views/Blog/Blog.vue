@@ -100,7 +100,8 @@
                       <span>{{ item.createdAt | getDate("year") }}</span>
                     </div>
                     <div flex="" items="center" class="discuss">
-                      <i class="iconfont icon-liuyan"></i> <span>23</span>
+                      <i class="iconfont icon-liuyan"></i>
+                      <span>{{ item.comments && item.comments.length }}</span>
                     </div>
                   </div>
                 </div>
@@ -116,7 +117,7 @@
           <Cols span="8">
             <div class="blog-content__right">
               <div class="widget widget__search">
-                <input class="search__input" type="text" placeholder="搜索">
+                <input class="search__input" type="text" placeholder="搜索" />
               </div>
               <div class="widget">
                 <div class="widget__title">热门文章</div>

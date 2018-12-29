@@ -42,6 +42,9 @@ const options = {
 
 Vue.use(VueInsProgressBar, options);
 Vue.use(InfiniteLoading, {
+  props: {
+    distance: 200
+  },
   slots: {
     // keep default styles
     noResults: "这里还没有数据daze~",
@@ -61,7 +64,3 @@ new Vue({
   store,
   render: h => h(App)
 }).$mount("#app");
-
-router.afterEach(() => {
-  window.scrollTo(0, 0);
-});

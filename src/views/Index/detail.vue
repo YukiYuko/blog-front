@@ -120,7 +120,7 @@
         </div>
       </div>
     </div>
-    <infinite-loading @infinite="_getComment"></infinite-loading>
+    <infinite-loading :identifier="infiniteId" ref="infinite" @infinite="_getComment"></infinite-loading>
     <!-- 返回顶部 -->
     <BackTop></BackTop>
     <!-- 发表留言 -->
@@ -192,6 +192,7 @@ export default {
     return {
       id: "",
       reply: "",
+      infiniteId: +new Date(),
       formValidate: {
         name: "",
         mail: "",
@@ -265,6 +266,10 @@ export default {
     VCode: Code,
     BackTop,
     FrameBtn
+  },
+  beforeRouteEnter(to, from, next) {
+    window.scroll(0, 0);
+    next();
   },
   created() {
     this.id = this.$route.params.id || "";
@@ -374,10 +379,11 @@ export default {
   /*right: 0;*/
   /*top: 0;*/
   /*bottom: 0;*/
+  /*overflow: auto;*/
   background-color: #fff;
   z-index: 1000;
   padding: 50px 0;
-  min-height: 100vh;
+  /*min-height: 100vh;*/
   .detail_head {
     height: 50px;
     text-align: center;
