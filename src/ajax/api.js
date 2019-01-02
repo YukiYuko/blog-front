@@ -49,3 +49,9 @@ export const commentUpdate = data =>
  * @params page: 当前页数
  * */
 export const getComment = data => api.post(base_url + "/comment/list", data);
+/*
+ * 获取最新的评论
+ * @params limit: 限制几条
+ * */
+export const getLatestComment = data =>
+  api.post(base_url + "/comment/latest", data);

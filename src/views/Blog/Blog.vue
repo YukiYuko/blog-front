@@ -95,13 +95,19 @@
                         >{{ tag }}</a
                       >
                     </div>
-                    <div flex="" items="center" box="2" class="time">
+                    <div flex="" items="center" box="3" class="time">
                       <i class="iconfont icon-shijian"></i>
                       <span>{{ item.createdAt | getDate("year") }}</span>
                     </div>
-                    <div flex="" items="center" class="discuss">
-                      <i class="iconfont icon-liuyan"></i>
-                      <span>{{ item.comments && item.comments.length }}</span>
+                    <div flex="" items="center" box="1" class="discuss">
+                      <div>
+                        <i class="iconfont icon-liuyan"></i>
+                        <span>{{ item.comments && item.comments.length }}</span>
+                      </div>
+                      <div>
+                        <i class="iconfont icon-hot"></i>
+                        <span>{{ item.heat || "0" }}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -121,12 +127,11 @@
               </div>
               <div class="widget">
                 <div class="widget__title">热门文章</div>
+                <HotNews></HotNews>
               </div>
               <div class="widget">
-                <div class="widget__title">最新文章</div>
-              </div>
-              <div class="widget">
-                <div class="widget__title">随机文章</div>
+                <div class="widget__title">最新评论</div>
+                <latest-comment></latest-comment>
               </div>
             </div>
           </Cols>
@@ -139,6 +144,8 @@
 
 <script>
 import HeadBar from "./components/HeadBar";
+import HotNews from "./components/HotNews";
+import LatestComment from "./components/LatestComment.vue";
 import $ from "../../lib/classie";
 import { getNews } from "../../ajax/api";
 import FrameBtn from "../../components/public/FrameBtn/FrameBtn";
@@ -159,7 +166,9 @@ export default {
   },
   components: {
     HeadBar,
-    FrameBtn
+    FrameBtn,
+    HotNews,
+    LatestComment
   },
   mounted() {
     this.init_anime();
@@ -325,6 +334,11 @@ export default {
             .tags {
               a {
                 color: @sub_color;
+                margin-right: 10px;
+              }
+            }
+            .discuss{
+              div:nth-child(1){
                 margin-right: 10px;
               }
             }
