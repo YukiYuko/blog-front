@@ -5,7 +5,7 @@
       <div class="header_center">
         <ul flex>
           <li>
-            <a href="">首页</a>
+            <a>首页</a>
             <div
               :style="{
                 'background-color': colors[0]
@@ -13,44 +13,21 @@
               class="skew"
             ></div>
           </li>
-          <li>
-            <a href="">移动前端</a>
+          <li
+            v-for="(item, index) in list"
+            :key="index"
+            @click="go('category', { type: item.key });"
+          >
+            <a>{{ item.name }}</a>
             <div
               :style="{
-                'background-color': colors[1]
+                'background-color': colors[index + 1]
               }"
               class="skew"
             ></div>
           </li>
           <li>
-            <a href="">Web前端</a>
-            <div
-              :style="{
-                'background-color': colors[2]
-              }"
-              class="skew"
-            ></div>
-          </li>
-          <li>
-            <a href="">授人以渔</a>
-            <div
-              :style="{
-                'background-color': colors[3]
-              }"
-              class="skew"
-            ></div>
-          </li>
-          <li>
-            <a href="">UI设计</a>
-            <div
-              :style="{
-                'background-color': colors[4]
-              }"
-              class="skew"
-            ></div>
-          </li>
-          <li>
-            <a href="">关于&留言</a>
+            <a>关于&留言</a>
             <div
               :style="{
                 'background-color': colors[5]
@@ -66,6 +43,7 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import { getTags } from "../../../ajax/api";
 export default {
   name: "HeadBar",
   data() {
@@ -78,16 +56,15 @@ export default {
         "#99CCFF",
         "#003366"
       ],
-      color_new: []
+      color_new: [],
+      list: []
     };
   },
   computed: {
     ...mapGetters(["user_id"])
   },
   mounted() {
-    // this.colors = this.shuffle(this.colors);
-    this.colors = this.shuffle(this.colors);
-    console.log(this.user_id);
+    this._getTags();
   },
   methods: {
     ...mapActions(["save"]),
@@ -101,6 +78,12 @@ export default {
         a[len - i - 1] = temp;
       }
       return [...a];
+    },
+    _getTags() {
+      getTags({ type: 2 }).then(res => {
+        this.list = res.data;
+        this.colors = this.shuffle(this.colors);
+      });
     }
   }
 };

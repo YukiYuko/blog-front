@@ -18,7 +18,9 @@ import {
   Scroll,
   Spin,
   Icon,
-  Switch
+  Switch,
+  Breadcrumb,
+  BreadcrumbItem
 } from "iview";
 
 Vue.component("CButton", Button);
@@ -37,6 +39,8 @@ Vue.component("CScroll", Scroll);
 Vue.component("Spin", Spin);
 Vue.component("Icon", Icon);
 Vue.component("CSwitch", Switch);
+Vue.component("Breadcrumb", Breadcrumb);
+Vue.component("BreadcrumbItem", BreadcrumbItem);
 Vue.prototype.$Notice = Notice;
 Vue.prototype.$Loading = LoadingBar;
 Vue.prototype.$Modal = Modal;

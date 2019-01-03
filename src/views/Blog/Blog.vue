@@ -122,21 +122,7 @@
           </Cols>
           <Cols span="8">
             <div class="blog-content__right">
-              <div class="widget">
-                <SearchInput></SearchInput>
-              </div>
-              <div class="widget">
-                <div class="widget__title">热门文章</div>
-                <HotNews></HotNews>
-              </div>
-              <div class="widget">
-                <div class="widget__title">最新评论</div>
-                <latest-comment></latest-comment>
-              </div>
-              <div class="widget">
-                <div class="widget__title">所有标签</div>
-                <Tags></Tags>
-              </div>
+              <SideBar></SideBar>
             </div>
           </Cols>
         </Row>
@@ -148,10 +134,7 @@
 
 <script>
 import HeadBar from "./components/HeadBar";
-import HotNews from "./components/HotNews";
-import SearchInput from "./components/SearchInput";
-import Tags from "./components/Tags";
-import LatestComment from "./components/LatestComment.vue";
+import SideBar from "./components/SideBar";
 import $ from "../../lib/classie";
 import { getNews } from "../../ajax/api";
 import FrameBtn from "../../components/public/FrameBtn/FrameBtn";
@@ -173,10 +156,7 @@ export default {
   components: {
     HeadBar,
     FrameBtn,
-    HotNews,
-    LatestComment,
-    Tags,
-    SearchInput
+    SideBar
   },
   mounted() {
     this.init_anime();
@@ -365,22 +345,6 @@ export default {
       position: -webkit-sticky;
       position: sticky;
       top: 0;
-      .widget {
-        background-color: #fff;
-        margin-bottom: 16px;
-        position: relative;
-        &__title {
-          font-size: 16px;
-          color: #333;
-          line-height: 50px;
-          height: 50px;
-          padding: 0 20px;
-          position: relative;
-          &:after {
-            .bottom-line();
-          }
-        }
-      }
     }
   }
 }
