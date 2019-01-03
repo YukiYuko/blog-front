@@ -55,3 +55,7 @@ export const getComment = data => api.post(base_url + "/comment/list", data);
  * */
 export const getLatestComment = data =>
   api.post(base_url + "/comment/latest", data);
+/*
+ * 获取所有标签
+ * */
+export const getTags = (data) => api.get(base_url + "/system/tag/list", data);

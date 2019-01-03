@@ -110,6 +110,11 @@ export default {
 @import "../../../assets/styles/var";
 .header {
   .drop-shadow-bottom;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: #fff;
   .container {
     height: 74px;
   }

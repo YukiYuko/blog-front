@@ -122,8 +122,8 @@
           </Cols>
           <Cols span="8">
             <div class="blog-content__right">
-              <div class="widget widget__search">
-                <input class="search__input" type="text" placeholder="搜索" />
+              <div class="widget">
+                <SearchInput></SearchInput>
               </div>
               <div class="widget">
                 <div class="widget__title">热门文章</div>
@@ -132,6 +132,10 @@
               <div class="widget">
                 <div class="widget__title">最新评论</div>
                 <latest-comment></latest-comment>
+              </div>
+              <div class="widget">
+                <div class="widget__title">所有标签</div>
+                <Tags></Tags>
               </div>
             </div>
           </Cols>
@@ -145,6 +149,8 @@
 <script>
 import HeadBar from "./components/HeadBar";
 import HotNews from "./components/HotNews";
+import SearchInput from "./components/SearchInput";
+import Tags from "./components/Tags";
 import LatestComment from "./components/LatestComment.vue";
 import $ from "../../lib/classie";
 import { getNews } from "../../ajax/api";
@@ -168,7 +174,9 @@ export default {
     HeadBar,
     FrameBtn,
     HotNews,
-    LatestComment
+    LatestComment,
+    Tags,
+    SearchInput
   },
   mounted() {
     this.init_anime();
@@ -354,6 +362,9 @@ export default {
     }
     &__right {
       min-height: 1000px;
+      position: -webkit-sticky;
+      position: sticky;
+      top: 0;
       .widget {
         background-color: #fff;
         margin-bottom: 16px;
@@ -368,41 +379,6 @@ export default {
           &:after {
             .bottom-line();
           }
-        }
-      }
-      .widget.widget__search {
-        padding: 20px;
-        .search__input {
-          width: 100%;
-          padding: 12px 24px;
-          background-color: transparent;
-          transition: all 250ms ease-in-out;
-          font-size: 14px;
-          line-height: 18px;
-          color: #575756;
-          background-image: url(http://mihaeltomic.com/codepen/input-search/ic_search_black_24px.svg);
-          background-repeat: no-repeat;
-          background-size: 18px 18px;
-          background-position: 95% center;
-          border-radius: 50px;
-          border: 1px solid #575756;
-          backface-visibility: hidden;
-          transform-style: preserve-3d;
-        }
-        .search__input::placeholder {
-          color: rgba(87, 87, 86, 0.8);
-          text-transform: uppercase;
-          letter-spacing: 1.5px;
-        }
-
-        .search__input:hover,
-        .search__input:focus {
-          padding: 12px 0;
-          outline: 0;
-          border: 1px solid transparent;
-          border-bottom: 1px solid #575756;
-          border-radius: 0;
-          background-position: 100% center;
         }
       }
     }

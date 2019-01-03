@@ -257,9 +257,8 @@ export default {
       color: #fff;
       font-size: 20px;
       z-index: 1;
-      transition: bottom 0.7s cubic-bezier(0.6, 0.13, 0.31, 1.02) 100ms,
-        transform 0.3s ease-in-out 100ms,
-        left 0.7s cubic-bezier(0.6, 0.13, 0.31, 1.02) 100ms;
+      transition: bottom 0.7s cubic-bezier(0.74, 0.32, 0.78, 0.37) 100ms,
+        transform 0.3s ease-in-out 100ms, left 0.7s linear 100ms;
     }
     &_left {
       transition: transform 0.7s cubic-bezier(0.6, 0.13, 0.31, 1.02);

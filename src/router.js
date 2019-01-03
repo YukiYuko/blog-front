@@ -44,6 +44,11 @@ export default new Router({
       component: Blog
     },
     {
+      path: "/search",
+      name: "search",
+      component: () => import("./views/Blog/Search.vue")
+    },
+    {
       path: "/about",
       name: "about",
       // route level code-splitting
