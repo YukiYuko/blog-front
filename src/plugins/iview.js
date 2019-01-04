@@ -20,7 +20,8 @@ import {
   Icon,
   Switch,
   Breadcrumb,
-  BreadcrumbItem
+  BreadcrumbItem,
+  Page
 } from "iview";
 
 Vue.component("CButton", Button);
@@ -41,6 +42,7 @@ Vue.component("Icon", Icon);
 Vue.component("CSwitch", Switch);
 Vue.component("Breadcrumb", Breadcrumb);
 Vue.component("BreadcrumbItem", BreadcrumbItem);
+Vue.component("Page", Page);
 Vue.prototype.$Notice = Notice;
 Vue.prototype.$Loading = LoadingBar;
 Vue.prototype.$Modal = Modal;

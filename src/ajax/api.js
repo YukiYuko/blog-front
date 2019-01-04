@@ -22,7 +22,10 @@ export const getImg = data => jsonp(biying, data);
  * 获取新闻列表
  * */
 export const getNews = data => api.post(base_url + "/news/newsList", data);
-
+/*
+ * 获取搜索结果
+ * */
+export const search = data => api.post(base_url + "/news/search", data);
 /*
  * 获取详情
  * @params id: 新闻ID

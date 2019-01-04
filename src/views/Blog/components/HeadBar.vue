@@ -1,10 +1,10 @@
 <template>
   <div class="header">
     <div class="container" flex justify="between">
-      <div class="header_left"></div>
+      <div class="header_left" @click="go('blogIndex');"></div>
       <div class="header_center">
         <ul flex>
-          <li>
+          <li @click="go('blogIndex');">
             <a>首页</a>
             <div
               :style="{
@@ -14,7 +14,7 @@
             ></div>
           </li>
           <li
-            v-for="(item, index) in list"
+            v-for="(item, index) in nav"
             :key="index"
             @click="go('category', { type: item.key });"
           >
@@ -43,7 +43,6 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import { getTags } from "../../../ajax/api";
 export default {
   name: "HeadBar",
   data() {
@@ -61,13 +60,13 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["user_id"])
+    ...mapGetters(["user_id", "nav"])
   },
   mounted() {
-    this._getTags();
+    this.getNav();
   },
   methods: {
-    ...mapActions(["save"]),
+    ...mapActions(["save", "getNav"]),
     // 乱序
     shuffle(a) {
       let len = a.length;
@@ -78,12 +77,6 @@ export default {
         a[len - i - 1] = temp;
       }
       return [...a];
-    },
-    _getTags() {
-      getTags({ type: 2 }).then(res => {
-        this.list = res.data;
-        this.colors = this.shuffle(this.colors);
-      });
     }
   }
 };

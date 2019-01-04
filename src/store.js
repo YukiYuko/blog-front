@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { getImg } from "./ajax/api";
+import { getImg, getTags } from "./ajax/api";
 import { getStorage } from "./lib/localstorage";
 
 Vue.use(Vuex);
@@ -10,7 +10,8 @@ export default new Vuex.Store({
     bgImg: "",
     token: getStorage("token") || "",
     user_id: getStorage("user_id") || "",
-    userInfo: getStorage("userInfo") || {}
+    userInfo: getStorage("userInfo") || {},
+    nav: []
   },
   mutations: {
     setBgImg(state, img) {
@@ -23,17 +24,20 @@ export default new Vuex.Store({
       if (data.userInfo) {
         state.userInfo = { ...state.userInfo, ...data.userInfo };
       }
+    },
+    setNav(state, data) {
+      state.nav = data;
     }
   },
   getters: {
     bgImg: state => state.bgImg,
     token: state => state.token,
     user_id: state => state.user_id,
-    userInfo: state => state.userInfo
+    userInfo: state => state.userInfo,
+    nav: state => state.nav
   },
   actions: {
     getBgImg({ state, commit }) {
-      console.log("state", state);
       getImg().then(res => {
         const { data } = res;
         commit("setBgImg", data.url);
@@ -42,6 +46,11 @@ export default new Vuex.Store({
     save({ commit }, data) {
       console.log(data);
       commit("save", data);
+    },
+    getNav({ state, commit }) {
+      getTags({ type: 2 }).then(res => {
+        commit("setNav", res.data);
+      });
     }
   }
 });

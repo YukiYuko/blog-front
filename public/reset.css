@@ -127,3 +127,10 @@ textarea {
 .iconfont{
   margin-right: 5px;
 }
+body .ivu-page-item-active{
+  background-color: #3690e8;
+  border: none;
+}
+body .ivu-page-item-active a{
+  color: #fff;
+}

@@ -47,7 +47,7 @@ export default {
       getNews({
         page: this.page,
         limit: this.limit,
-        condition: { sort: "heat" }
+        sort: "heat"
       }).then(res => {
         const { data } = res.data;
         this.list = data;
@@ -67,11 +67,15 @@ export default {
     cursor: pointer;
     &.active {
       .hot_news_item_text {
+        h3 {
+          .text-overflow();
+        }
         p {
           display: block;
         }
       }
       .hot_news_item_image {
+        width: 95px;
         img {
           display: block;
         }
@@ -80,7 +84,7 @@ export default {
     &_image {
       position: relative;
       margin-right: 15px;
-      min-width: 22px;
+      width: 22px;
       min-height: 22px;
       span {
         position: absolute;
@@ -110,6 +114,10 @@ export default {
     }
     &_text {
       color: @sub_color;
+      // 需要注意的是，在移动端在flex元素中的内容进行省略文字的操作，
+      // 则flex失效，flex之外的内容宽度不受控制，图片宽度无法撑起，
+      // 解决办法如下：给设置了flex:1;弹性宽度的div设置最小宽度为0可以解决此问题。
+      flex:1; min-width:0;
       h3 {
         font-size: 14px;
         line-height: 20px;

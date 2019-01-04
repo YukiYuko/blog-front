@@ -10,13 +10,15 @@
       items="center"
       justify="center"
     >
-      移动前端
+      {{ category }}
     </div>
     <div class="container">
       <div class="bread">
         <Breadcrumb>
           <BreadcrumbItem to="/blog">首页</BreadcrumbItem>
-          <BreadcrumbItem to="/category/h5">移动前端</BreadcrumbItem>
+          <BreadcrumbItem :to="`/category/${newsType}`">{{
+            category
+          }}</BreadcrumbItem>
         </Breadcrumb>
       </div>
       <div class="category_content">
@@ -24,14 +26,19 @@
           <Cols span="16">
             <div class="category_content__left">
               <div class="category_list">
-                <Item1></Item1>
+                <Item1
+                  v-for="(item, index) in list"
+                  :data="item"
+                  :key="index"
+                ></Item1>
+              </div>
+              <div class="page" style="text-align: center; padding: 30px">
+                <Page @on-change="changePage" :total="total" :page-size="limit"></Page>
               </div>
             </div>
           </Cols>
           <Cols span="8">
-            <div class="category_content__right">
-              <SideBar></SideBar>
-            </div>
+            <div class="category_content__right"><SideBar></SideBar></div>
           </Cols>
         </Row>
       </div>
@@ -43,17 +50,68 @@
 import HeadBar from "./components/HeadBar";
 import SideBar from "./components/SideBar";
 import Item1 from "./components/Item1";
+import { getNews } from "../../ajax/api";
 export default {
   name: "Category",
   data() {
-    return {};
+    return {
+      page: 1,
+      limit: 5,
+      newsType: "",
+      list: [],
+      total: 0
+    };
   },
   components: {
     HeadBar,
     SideBar,
     Item1
   },
-  methods: {}
+  computed: {
+    category() {
+      let data = {
+        h5: "移动前端",
+        web: "web前端",
+        skill: "授人以渔",
+        design: "UI设计"
+      };
+      return data[this.newsType];
+    }
+  },
+  created() {
+    this.newsType = this.$route.params.type;
+  },
+  watch: {
+    $route: function() {
+      this.newsType = this.$route.params.type;
+      this.page = 1;
+      this._getNews();
+    }
+  },
+  mounted() {
+    this._getNews();
+  },
+  methods: {
+    changePage(page) {
+      this.page = page;
+      window.scrollTo(0, 0);
+      this._getNews();
+    },
+    _getNews() {
+      let params = {
+        page: this.page,
+        limit: this.limit,
+        condition: {
+          newsType: this.newsType
+        }
+      };
+      getNews(params).then(res => {
+        const { data, total } = res.data;
+        this.list = data;
+        this.total = total;
+      });
+    }
+  }
 };
 </script>
 
@@ -71,11 +129,11 @@ export default {
     color: #fff;
     margin-bottom: 20px;
   }
-  .bread{
+  .bread {
     padding: 20px;
     background-color: #ffffff;
   }
-  &_content{
+  &_content {
     background-color: @background_color;
     min-height: 2000px;
     padding: 20px 0;

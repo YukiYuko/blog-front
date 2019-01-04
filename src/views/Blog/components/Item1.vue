@@ -1,21 +1,12 @@
 <template>
-  <div class="item1">
+  <div class="item1" @click="go('blog', { id: data._id });">
     <div class="time">
       <div>2018/10</div>
       <div>23&nbsp;&nbsp;周二</div>
     </div>
-    <div class="title">iPhone微信二维码长按识别不了?</div>
-    <div class="image">
-      <img src="../../../assets/images/blog/a2.png" alt="" />
-    </div>
-    <div class="desc">
-      前言
-      微信提供图片长按识别二维码跳转的功能，但是发现有时候在iPhone下并不是所有图都可以出现识别二维码。但是在Android的设备下可识别，这里究竟是什么原因呢？
-      识别方式 微信 6.7.3 Android 取整张图片分析，有二维码即可识别。 iOS
-      [crayon-5c2d8772aef2c426872991/]
-      当图片的宽高或高宽比例超过竖屏2倍，采用的方案是截取当前屏幕分析，两端策略不一致。
-      所以当长图超过一定比例，二维码没在屏幕可视区域时，不会出现识别二维码。 测
-    </div>
+    <div class="title">{{ data.title }}</div>
+    <div class="image"><img :src="data.image" alt="" /></div>
+    <div class="desc">{{ data.desc }}</div>
     <div flex justify="between" items="center" class="text">
       <div class="avatar" box="1">
         <img src="../../../assets/images/touxiang.png" width="25" height="25" />
@@ -23,13 +14,16 @@
       </div>
       <div flex="" items="center" box="4" class="tags">
         <a> <i class="iconfont icon-tag"></i> </a>
-        <a v-for="(tag, tag_index) in ['aa', 'bb', 'cc']" :key="tag_index">{{
-          tag
-        }}</a>
+        <a v-for="(tag, index) in data.tags" :key="index">{{ tag }}</a>
       </div>
       <div flex="" items="center" box="1" class="discuss">
-        <div><i class="iconfont icon-liuyan"></i> <span>10</span></div>
-        <div><i class="iconfont icon-hot"></i> <span>12</span></div>
+        <div>
+          <i class="iconfont icon-liuyan"></i>
+          <span>{{ data.comments && data.comments.length }}</span>
+        </div>
+        <div>
+          <i class="iconfont icon-hot"></i> <span>{{ data.heat || "0" }}</span>
+        </div>
       </div>
     </div>
   </div>
@@ -37,7 +31,10 @@
 
 <script>
 export default {
-  name: "Item1"
+  name: "Item1",
+  props: {
+    data: Object
+  }
 };
 </script>
 
@@ -52,7 +49,7 @@ export default {
   cursor: pointer;
   &:hover {
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
-    &:before{
+    &:before {
       width: 100%;
     }
   }
