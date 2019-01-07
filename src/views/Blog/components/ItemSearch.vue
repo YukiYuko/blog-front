@@ -1,7 +1,7 @@
 <template>
   <div class="item_search" flex="" @click="go('blog', { id: data._id });">
     <div class="image"><img :src="data.image" alt="" /></div>
-    <div class="text">
+    <div class="text" box="1">
       <h3>{{ data.title }}</h3>
       <p>{{ data.createdAt | getDate }}</p>
       <div>{{ data.desc }}</div>
@@ -24,6 +24,7 @@ export default {
 .item_search {
   padding: 20px 0;
   border-bottom: 1px solid @border_color;
+  cursor: pointer;
   .image {
     width: 240px;
     margin-right: 20px;
@@ -46,6 +47,7 @@ export default {
       font-size: 14px;
       color: @info_color;
       line-height: 20px;
+      .line-clamp();
     }
   }
 }

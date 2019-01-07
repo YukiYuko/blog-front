@@ -1,8 +1,12 @@
 <template>
   <div class="tags" flex wrap="wrap">
-    <a v-for="(item, index) in list" :key="index" class="gradient-btn">{{
-      item.name
-    }}</a>
+    <a
+      @click="go('tag', { type: item.name });"
+      v-for="(item, index) in list"
+      :key="index"
+      class="gradient-btn"
+      >{{ item.name }}</a
+    >
   </div>
 </template>
 

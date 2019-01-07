@@ -54,6 +54,11 @@ export default new Router({
       component: () => import("./views/Blog/Category.vue")
     },
     {
+      path: "/tag/:type",
+      name: "tag",
+      component: () => import("./views/Blog/Tag.vue")
+    },
+    {
       path: "/about",
       name: "about",
       // route level code-splitting
