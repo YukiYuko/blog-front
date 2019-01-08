@@ -162,9 +162,7 @@ export default {
   created() {
     this.get_check_code();
   },
-  mounted() {
-    console.log(this.token);
-  },
+  mounted() {},
   methods: {
     ...mapActions(["save"]),
     switchToReg() {

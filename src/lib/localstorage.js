@@ -10,7 +10,6 @@ function getStorage(name) {
     }
   } catch (err) {
     data = false;
-    console.log("set_localStorage:" + err);
   }
   return data;
 }
@@ -20,7 +19,6 @@ function setStorage(name, data) {
     let storage = window.localStorage;
     storage.setItem(name, data);
   } catch (err) {
-    console.log("set_localStorage:" + err);
   }
 }
 //删除localStorage
@@ -29,7 +27,6 @@ function removeStorage(name) {
     let storage = window.localStorage;
     storage.removeItem(name);
   } catch (err) {
-    console.log("remove_localStorage:" + err);
   }
 }
 export { getStorage, setStorage, removeStorage };

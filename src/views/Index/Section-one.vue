@@ -224,7 +224,6 @@ export default {
     initSkew() {
       let items = document.querySelectorAll(".skew-item");
       for (let i = 0; i < items.length; i++) {
-        console.log(items[i]);
         items[i].style.left = window.innerWidth * Math.random() + "px";
         items[i].style.bottom = -100 * Math.random() + "px";
         items[i].style.transform = `rotate(${300 * Math.random()}deg)`;
@@ -304,7 +303,6 @@ export default {
         isAnimating,
         container = document.getElementById("container"),
         trigger = container.querySelector(".arrow");
-      console.log(trigger);
       // 获取滚动距离
       function scrollY() {
         return window.pageYOffset || docElem.scrollTop;

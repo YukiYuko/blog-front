@@ -68,28 +68,25 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-import TabHead from "../../components/common/TabHead.vue";
 export default {
   name: "Profile",
   data() {
     return {};
   },
-  components: {
-    TabHead
-  },
+  components: {},
   mounted() {
     this.getBgImg();
-    this._bangumi_get_user();
+    // this._bangumi_get_user();
   },
   computed: {
     ...mapGetters(["bgImg"])
   },
   methods: {
-    ...mapActions(["getBgImg"]),
+    ...mapActions(["getBgImg"])
     // 选择想看，已看，抛弃
-    select(id) {
-      console.log(id);
-    }
+    // select(id) {
+    //   // console.log(id);
+    // }
   }
 };
 </script>

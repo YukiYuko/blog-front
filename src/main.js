@@ -10,7 +10,6 @@ import "v-contextmenu/dist/index.css";
 import "./plugins/iview.js";
 import filters from "./filter";
 Object.keys(filters).forEach(k => {
-  console.log(filters);
   Vue.filter(k, filters[k]);
 });
 

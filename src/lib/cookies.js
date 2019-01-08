@@ -6,7 +6,6 @@
  */
 const getCookie = name => {
   let arr = document.cookie.replace(/\s/g, "").split(";");
-  console.log("arr", arr)
   for (let i = 0; i < arr.length; i++) {
     let tempArr = arr[i].split("=");
     if (tempArr[0] === name) {

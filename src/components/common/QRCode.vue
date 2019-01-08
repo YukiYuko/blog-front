@@ -28,7 +28,6 @@ export default {
       let canvas = document.querySelector(".canvas");
       QRCode.toCanvas(canvas, this.url, function(error) {
         if (error) console.error(error);
-        console.log("QRCode success!");
       });
     }
   },

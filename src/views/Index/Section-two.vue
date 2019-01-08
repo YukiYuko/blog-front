@@ -81,7 +81,6 @@ export default {
       if (!this.hasMore) {
         return false;
       }
-      console.log(this);
       this.loadMoreText = "加载中";
       this.$insProgress.start();
       getNews({ page: this.page, limit: this.limit })

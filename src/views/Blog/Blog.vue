@@ -121,9 +121,7 @@
             </div>
           </Cols>
           <Cols span="8">
-            <div class="blog-content__right">
-              <SideBar></SideBar>
-            </div>
+            <div class="blog-content__right"><SideBar></SideBar></div>
           </Cols>
         </Row>
       </div>
@@ -167,7 +165,6 @@ export default {
       if (!this.hasMore) {
         return false;
       }
-      console.log(this);
       this.loadMoreText = "加载中";
       this.$insProgress.start();
       getNews({ page: this.page, limit: this.limit })
@@ -325,8 +322,8 @@ export default {
                 margin-right: 10px;
               }
             }
-            .discuss{
-              div:nth-child(1){
+            .discuss {
+              div:nth-child(1) {
                 margin-right: 10px;
               }
             }

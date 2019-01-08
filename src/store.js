@@ -16,7 +16,6 @@ export default new Vuex.Store({
   mutations: {
     setBgImg(state, img) {
       state.bgImg = img;
-      console.log("img,", img);
     },
     save(state, data) {
       state.token = data.token;
@@ -37,17 +36,16 @@ export default new Vuex.Store({
     nav: state => state.nav
   },
   actions: {
-    getBgImg({ state, commit }) {
+    getBgImg({ commit }) {
       getImg().then(res => {
         const { data } = res;
         commit("setBgImg", data.url);
       });
     },
     save({ commit }, data) {
-      console.log(data);
       commit("save", data);
     },
-    getNav({ state, commit }) {
+    getNav({ commit }) {
       getTags({ type: 2 }).then(res => {
         commit("setNav", res.data);
       });
