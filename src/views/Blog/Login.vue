@@ -139,10 +139,12 @@
 </template>
 
 <script>
+import CryptoJS from "crypto-js";
 import { checkStr } from "../../lib/index";
 import { register, login, checkcode } from "../../ajax/api";
 import { mapGetters, mapActions } from "vuex";
-import { setStorage } from "../../lib/localstorage";
+import { setStorage, getStorage } from "../../lib/localstorage";
+const secret = "Yuki";
 
 export default {
   name: "Login",
@@ -156,11 +158,26 @@ export default {
       code: ""
     };
   },
+  beforeRouteEnter(to, from, next) {
+    let token = getStorage("token");
+    if (token) {
+      next("/blog");
+    } else {
+      next();
+    }
+  },
   computed: {
     ...mapGetters(["token"])
   },
   created() {
     this.get_check_code();
+    if (getStorage("userName")) {
+      this.userName = getStorage("userName");
+      this.password = CryptoJS.AES.decrypt(
+        getStorage("password"),
+        secret
+      ).toString(CryptoJS.enc.Utf8);
+    }
   },
   mounted() {},
   methods: {
@@ -186,6 +203,10 @@ export default {
           this.save(res.data);
           setStorage("token", res.data.token);
           setStorage("user_id", res.data._id);
+          if (this.remember) {
+            setStorage("userName", this.userName);
+            setStorage("password", CryptoJS.AES.encrypt(this.password, secret));
+          }
           this.isReg = false;
           this.go("blogIndex");
         });
