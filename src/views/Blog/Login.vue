@@ -158,14 +158,14 @@ export default {
       code: ""
     };
   },
-  beforeRouteEnter(to, from, next) {
-    let token = getStorage("token");
-    if (token) {
-      next("/blog");
-    } else {
-      next();
-    }
-  },
+  // beforeRouteEnter(to, from, next) {
+  //   let token = getStorage("token");
+  //   if (token) {
+  //     next("/blog");
+  //   } else {
+  //     next();
+  //   }
+  // },
   computed: {
     ...mapGetters(["token"])
   },

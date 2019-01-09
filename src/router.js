@@ -59,6 +59,16 @@ export default new Router({
       component: () => import("./views/Blog/Tag.vue")
     },
     {
+      path: "/center/:id",
+      name: "center",
+      component: () => import("./views/Profile/Center.vue")
+    },
+    {
+      path: "/setting/:type",
+      name: "setting",
+      component: () => import("./views/Profile/Setting.vue")
+    },
+    {
       path: "/about",
       name: "about",
       // route level code-splitting

@@ -37,6 +37,26 @@
           </li>
         </ul>
       </div>
+      <div class="header_right">
+        <div class="no_login" v-if="!userInfo.userName">
+          <i class="iconfont icon-yonghu"></i>
+          <div class="to_login" @click="go('login');"><a>登陆</a></div>
+        </div>
+        <div class="is_login" v-if="userInfo.userName">
+          <img
+            class="touxiang"
+            :src="userInfo.headImage"
+            :alt="userInfo.userName"
+          />
+          <div class="to_center">
+            <h3>{{ userInfo.userName }}</h3>
+            <ul>
+              <li @click="go('center', { id: userInfo._id });">个人中心</li>
+            </ul>
+            <div class="login_out">退出</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -60,13 +80,14 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["user_id", "nav"])
+    ...mapGetters(["user_id", "nav", "userInfo"])
   },
   mounted() {
     this.getNav();
+    this._getUser();
   },
   methods: {
-    ...mapActions(["save", "getNav"]),
+    ...mapActions(["save", "getNav", "_getUser"]),
     // 乱序
     shuffle(a) {
       let len = a.length;
@@ -134,6 +155,110 @@ export default {
           left: 0;
           top: 70px;
           transition: all 0.2s ease-in-out;
+        }
+      }
+    }
+  }
+  .header_right {
+    .no_login {
+      width: 60px;
+      text-align: center;
+      height: 74px;
+      line-height: 74px;
+      cursor: pointer;
+      position: relative;
+      &:hover {
+        background-color: rgba(27, 35, 53, 0.88);
+        color: #ffffff;
+      }
+      &:hover .to_login {
+        display: block;
+      }
+      i {
+        font-size: 36px;
+      }
+      .to_login {
+        position: absolute;
+        width: 100px;
+        top: 100%;
+        left: 0;
+        line-height: 1;
+        background-color: rgba(27, 35, 53, 0.88);
+        display: none;
+        a {
+          height: 45px;
+          line-height: 45px;
+          color: #ffffff;
+        }
+      }
+    }
+    .is_login {
+      position: relative;
+      line-height: 74px;
+      &:hover {
+        .touxiang {
+          transform: translateY(30px) scale(1.2);
+        }
+        .to_center {
+          transform: translateY(0);
+          visibility: visible;
+          opacity: 1;
+        }
+      }
+      .touxiang {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        transition: all 0.3s ease-in-out;
+        cursor: pointer;
+        position: relative;
+        z-index: 1;
+      }
+      .to_center {
+        position: absolute;
+        left: 50%;
+        margin-left: -130px;
+        width: 260px;
+        padding: 50px 0 0;
+        top: 100%;
+        min-height: 200px;
+        background: #fff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.16);
+        border-radius: 0 0 4px 4px;
+        line-height: normal;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+        transform: translateY(-20px);
+        visibility: hidden;
+        opacity: 0;
+        h3 {
+          text-align: center;
+          color: @active_color;
+          font-size: 18px;
+        }
+        ul {
+          li {
+            display: block;
+            padding: 0 20px;
+            line-height: 40px;
+            color: @title_color;
+            border-bottom: 1px solid @border_color;
+            transition: all 0.3s;
+            &:hover {
+              text-indent: 10px;
+              color: @active_color;
+            }
+          }
+        }
+        .login_out {
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          line-height: 40px;
+          text-align: right;
+          padding: 0 20px;
+          background-color: @background_color;
         }
       }
     }

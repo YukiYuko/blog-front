@@ -13,6 +13,7 @@ body {
   -webkit-font-smoothing: antialiased;
   font-family: arial, sans-serif;
   line-height: 1 !important;
+  color: #444 !important;
 }
 
 body, img, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td, iframe {

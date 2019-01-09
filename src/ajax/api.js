@@ -11,6 +11,11 @@ export const register = data => api.post(base_url + "/users/register", data);
  * */
 export const login = data => api.post(base_url + "/users/login", data);
 /*
+ * 获取用户信息
+ * @params id
+ * */
+export const getUser = data => api.get(base_url + "/users/userInfo", data);
+/*
  * 获取验证码
  * */
 export const checkcode = () => api.get(base_url + "/other/checkcode");
