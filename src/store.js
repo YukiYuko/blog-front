@@ -1,7 +1,15 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { getImg, getTags, getUser } from "./ajax/api";
-import { getStorage } from "./lib/localstorage";
+import router from "./router";
+import { Message } from "iview";
+import {
+  getImg,
+  getTags,
+  getUser,
+  updateUser,
+  changePassword
+} from "./ajax/api";
+import {getStorage, setStorage} from "./lib/localstorage";
 
 Vue.use(Vuex);
 
@@ -65,6 +73,34 @@ export default new Vuex.Store({
     _getUser({ commit, state }) {
       getUser({ _id: state.user_id }).then(res => {
         commit("setUser", res.data);
+      });
+    },
+    _updateUser({ commit, state }, data) {
+      updateUser({ _id: state.user_id, data }).then(() => {
+        commit("setUser", data);
+        Message.success("修改成功！");
+      });
+    },
+    // 修改用户密码
+    _changePassword({ commit, state }, data) {
+      changePassword({ ...data, _id: state.user_id }).then((res) => {
+        let reset = {
+          token: "",
+          user_id: "",
+          userInfo: USER_INFO
+        };
+        commit("save", reset);
+        setStorage("token", "");
+        setStorage("user_id", "");
+        setStorage("userInfo", "");
+        setStorage("userName", "");
+        setStorage("password", "");
+        Message.success({
+          onClose: () => {
+            router.push("/login");
+          },
+          content: res.info
+        });
       });
     }
   }

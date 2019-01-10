@@ -1,5 +1,7 @@
 <template>
-  <button @click="$emit('click')" class="button" :class="type">{{text}}</button>
+  <button @click="$emit('click');" class="button" :class="type">
+    <slot> {{ text }} </slot>
+  </button>
 </template>
 
 <script>
@@ -21,7 +23,9 @@ export default {
 <style lang="less" scoped>
 .button {
   position: relative;
-  padding: 0.8em 1.5em;
+  width: 90px;
+  height: 35px;
+  line-height: 35px;
   border: none;
   background-color: transparent;
   cursor: pointer;
@@ -126,12 +130,10 @@ export default {
   height: 100%;
 }
 
-
-.button{
-  &.normal{
+.button {
+  &.normal {
     display: inline-block;
     font-size: 1em;
-    padding: 0.8em 2em;
     -webkit-appearance: none;
     appearance: none;
     background-color: #ff0081;

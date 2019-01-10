@@ -2,6 +2,7 @@ import api from "./index";
 import jsonp from "./jsonp";
 const biying = "https://bing.ioliu.cn/v1";
 const base_url = "http://localhost:3002";
+//*******************用户相关**************
 /*
  * 注册
  * */
@@ -19,6 +20,22 @@ export const getUser = data => api.get(base_url + "/users/userInfo", data);
  * 获取验证码
  * */
 export const checkcode = () => api.get(base_url + "/other/checkcode");
+/*
+ * 修改个人信息
+ * @params: id
+ * @params: data
+ * */
+export const updateUser = data => api.post(base_url + "/users/update", data);
+/*
+ * 修改密码
+ * @params: id
+ * @params: old_password
+ * @params: new_password
+ * @params: sure_password
+ * */
+export const changePassword = data =>
+  api.post(base_url + "/users/updatePassword", data);
+//*******************用户相关**************
 /*
  * 获取必应地址
  * */
@@ -66,4 +83,4 @@ export const getLatestComment = data =>
 /*
  * 获取所有标签
  * */
-export const getTags = (data) => api.get(base_url + "/system/tag/list", data);
+export const getTags = data => api.get(base_url + "/system/tag/list", data);

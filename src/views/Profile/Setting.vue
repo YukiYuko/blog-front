@@ -7,7 +7,7 @@
           v-for="tab in tabs"
           :key="tab.key"
           :class="{ active: currentTab === tab.key }"
-          @click="currentTab = tab.key;"
+          @click="go('setting', { type: tab.key });"
           >{{ tab.name }}</a
         >
       </div>
@@ -35,6 +35,14 @@ export default {
       currentTab: "profile"
     };
   },
+  watch: {
+    $route: function() {
+      this.currentTab = this.$route.params.type;
+    }
+  },
+  created() {
+    this.currentTab = this.$route.params.type;
+  },
   components: {
     HeadBar,
     Setting_profile,
@@ -48,7 +56,7 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 @import "../../assets/styles/mixins";
 @import "../../assets/styles/var";
 .setting {

@@ -1,13 +1,13 @@
 import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
+import "./plugins/iview.js";
 import store from "./store";
 import VueLazyload from "vue-lazyload";
 import contentmenu from "v-contextmenu";
 import VueInsProgressBar from "vue-ins-progress-bar";
 import InfiniteLoading from "vue-infinite-loading";
 import "v-contextmenu/dist/index.css";
-import "./plugins/iview.js";
 import filters from "./filter";
 Object.keys(filters).forEach(k => {
   Vue.filter(k, filters[k]);

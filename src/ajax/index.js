@@ -2,8 +2,8 @@
 import axios from "axios";
 import { Message } from "iview";
 import store from "../store";
-import { getCookie } from "../lib/cookies";
-
+// import { getCookie } from "../lib/cookies";
+//
 let cancel,
   promiseArr = {};
 const CancelToken = axios.CancelToken;
