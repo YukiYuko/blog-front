@@ -120,7 +120,11 @@
         </div>
       </div>
     </div>
-    <infinite-loading :identifier="infiniteId" ref="infinite" @infinite="_getComment"></infinite-loading>
+    <infinite-loading
+      :identifier="infiniteId"
+      ref="infinite"
+      @infinite="_getComment"
+    ></infinite-loading>
     <!-- 返回顶部 -->
     <BackTop></BackTop>
     <!-- 发表留言 -->
@@ -142,27 +146,29 @@
             placeholder="说点儿什么吧..."
           />
         </FormItem>
-        <FormItem label="昵称" prop="name">
-          <c-input v-model="formValidate.name" placeholder="输入您的昵称" />
-        </FormItem>
-        <FormItem label="邮箱" prop="mail">
-          <c-input
-            v-model="formValidate.mail"
-            placeholder="邮箱不会被公开显示"
-          />
-        </FormItem>
-        <FormItem label="QQ" prop="qq">
-          <c-input
-            v-model.number="formValidate.qq"
-            placeholder="QQ不会被公开显示"
-          />
-        </FormItem>
-        <FormItem label="url" prop="url">
-          <c-input
-            v-model="formValidate.url"
-            placeholder="Url会被当做昵称的外链使用,您可以放置您的个人博客于此"
-          />
-        </FormItem>
+        <div v-if="!user_id">
+          <FormItem label="昵称" prop="name">
+            <c-input v-model="formValidate.name" placeholder="输入您的昵称" />
+          </FormItem>
+          <FormItem label="邮箱" prop="mail">
+            <c-input
+              v-model="formValidate.mail"
+              placeholder="邮箱不会被公开显示"
+            />
+          </FormItem>
+          <FormItem label="QQ" prop="qq">
+            <c-input
+              v-model.number="formValidate.qq"
+              placeholder="QQ不会被公开显示"
+            />
+          </FormItem>
+          <FormItem label="url" prop="url">
+            <c-input
+              v-model="formValidate.url"
+              placeholder="Url会被当做昵称的外链使用,您可以放置您的个人博客于此"
+            />
+          </FormItem>
+        </div>
       </c-form>
       <div slot="footer">
         <c-button size="large" @click="cancel_visitor('formValidate');"
@@ -186,6 +192,7 @@ import { getScrollTop } from "../../lib/index";
 import Code from "../../components/common/QRCode";
 import BackTop from "../../components/public/BackTop/BackTop";
 import FrameBtn from "../../components/public/FrameBtn/FrameBtn";
+import { mapGetters } from "vuex";
 export default {
   name: "detail",
   data() {
@@ -198,7 +205,8 @@ export default {
         mail: "",
         desc: "",
         qq: "",
-        url: ""
+        url: "",
+        headImage: ""
       },
       ruleValidate: {
         name: [
@@ -254,6 +262,7 @@ export default {
     };
   },
   computed: {
+    ...mapGetters(["user_id", "userInfo"]),
     width() {
       let w = document.body.clientWidth;
       let h = document.body.clientHeight;
@@ -301,7 +310,14 @@ export default {
     submit_visitor(name) {
       this.$refs[name].validate(valid => {
         if (valid) {
-          let userId = this.isLogin ? "" : "5c218aee694151792ad0ed99";
+          let userId = "";
+          if (this.user_id) {
+            this.formValidate.name = this.userInfo.userName;
+            this.formValidate.mail = this.userInfo.email;
+            this.formValidate.qq = this.userInfo.qq;
+            this.formValidate.url = this.userInfo.homePage;
+            this.formValidate.headImage = this.userInfo.headImage;
+          }
           let data = {
             ...this.formValidate,
             newsId: this.$route.params.id,
@@ -318,10 +334,14 @@ export default {
             if (!this.reply) {
               this.comments.unshift(res.data);
             } else {
-              let parent = this.comments.filter(
-                item => item._id === this.reply.pid
-              );
-              parent[0].reply.push(res.data);
+              if (this.reply.pid == 0) {
+                this.reply.reply.push(res.data);
+              } else {
+                let parent = this.comments.filter(
+                  item => item._id === this.reply.pid
+                );
+                parent[0].reply.push(res.data);
+              }
             }
           });
         } else {
@@ -364,6 +384,9 @@ export default {
     reply_fun(item, id) {
       this.pid = id;
       this.reply = item;
+      // if (this.reply.pid == 0) {
+      //   this.reply.pid = this.reply._id;
+      // }
       this.show_discuss = true;
     }
   }

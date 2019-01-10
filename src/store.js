@@ -9,7 +9,7 @@ import {
   updateUser,
   changePassword
 } from "./ajax/api";
-import {getStorage, setStorage} from "./lib/localstorage";
+import { getStorage, setStorage } from "./lib/localstorage";
 
 Vue.use(Vuex);
 
@@ -27,7 +27,9 @@ export default new Vuex.Store({
     bgImg: "",
     token: getStorage("token") || "",
     user_id: getStorage("user_id") || "",
-    userInfo: getStorage("userInfo") || USER_INFO,
+    userInfo: getStorage("userInfo")
+      ? JSON.parse(getStorage("userInfo"))
+      : USER_INFO,
     nav: []
   },
   mutations: {
@@ -73,6 +75,7 @@ export default new Vuex.Store({
     _getUser({ commit, state }) {
       getUser({ _id: state.user_id }).then(res => {
         commit("setUser", res.data);
+        setStorage("userInfo", JSON.stringify(res.data));
       });
     },
     _updateUser({ commit, state }, data) {
@@ -83,7 +86,7 @@ export default new Vuex.Store({
     },
     // 修改用户密码
     _changePassword({ commit, state }, data) {
-      changePassword({ ...data, _id: state.user_id }).then((res) => {
+      changePassword({ ...data, _id: state.user_id }).then(res => {
         let reset = {
           token: "",
           user_id: "",

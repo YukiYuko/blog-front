@@ -57,6 +57,22 @@
         @save="save('homePage');"
         @cancel="cancel('homePage');"
       ></setting_profile_item>
+      <setting_profile_item
+        v-model="qq"
+        @input="v => (qq = v)"
+        placeholder="请填写你的个人qq"
+        label="个人qq"
+        @save="save('qq');"
+        @cancel="cancel('qq');"
+      ></setting_profile_item>
+      <setting_profile_item
+        v-model="email"
+        @input="v => (email = v)"
+        placeholder="请填写你的个人email"
+        label="个人email"
+        @save="save('email');"
+        @cancel="cancel('email');"
+      ></setting_profile_item>
     </ul>
     <!-- 上传图像 -->
     <div class="cropper-img-box" v-if="cropper_box_mark">
@@ -109,7 +125,9 @@ export default {
       job: "",
       company: "",
       introduce: "",
-      homePage: ""
+      homePage: "",
+      qq: "",
+      email: ""
     };
   },
   computed: {
@@ -129,6 +147,8 @@ export default {
       this.company = val.company;
       this.homePage = val.homePage;
       this.introduce = val.introduce;
+      this.qq = val.qq;
+      this.email = val.email;
     }
   },
   mounted() {},

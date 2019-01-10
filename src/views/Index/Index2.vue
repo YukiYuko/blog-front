@@ -49,8 +49,8 @@ export default {
         },
         {
           img: require("../../assets/images/index/pic05.jpg"),
-          title: "世界线",
-          intro: "其实就是一个时间轴desu~"
+          title: "番剧推荐",
+          intro: "博主喜欢的一些日剧和动漫~"
         },
         {
           img: require("../../assets/images/index/pic06.jpg"),
