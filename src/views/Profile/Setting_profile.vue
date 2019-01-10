@@ -131,8 +131,7 @@ export default {
       this.introduce = val.introduce;
     }
   },
-  mounted() {
-  },
+  mounted() {},
   methods: {
     ...mapActions(["getNav", "_getUser", "_updateUser"]),
     cancel(key) {
@@ -140,7 +139,7 @@ export default {
     },
     save(key) {
       let data = {
-        [key]: this[key],
+        [key]: this[key]
       };
       this._updateUser(data);
     },
@@ -151,8 +150,8 @@ export default {
       this.$refs.cropper.rotateLeft();
     },
     finish() {
-      this.$refs.cropper.getCropData(data => {
-        this.headImage = data;
+      this.$refs.cropper.getCropData(async data => {
+        await this._updateUser({ headImage: data });
         this.cropper_box_mark = false;
       });
     },
