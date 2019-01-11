@@ -1,116 +1,118 @@
 <template>
   <div class="detail">
-    <div class="detail_head" flex>
-      <div class="scrollbar" :style="{ width: width }"></div>
-      <div class="left" @click="go('index');">
-        <i class="iconfont icon-shouye"></i>
-      </div>
-      <div class="center" box="1">
-        <transition name="fade">
-          <span v-show="scrollVal > 100">{{ detail.title }}</span>
-        </transition>
-      </div>
-      <div
-        id="code"
-        class="right"
-        @mouseover="show_code = true;"
-        @mouseout="show_code = false;"
-      >
-        <i class="iconfont icon-QR"></i> <v-code v-show="show_code"></v-code>
-      </div>
-    </div>
-    <div class="detail_cont">
-      <div class="min_container">
-        <div class="detail_cont_title">{{ detail.title }}</div>
-        <div class="detail_cont_time">
-          {{ detail.createdAt | getDate("year") }}
+    <div class="detail_box">
+      <div class="detail_head" flex>
+        <div class="scrollbar" :style="{ width: width }"></div>
+        <div class="left" @click="go('index');">
+          <i class="iconfont icon-shouye"></i>
         </div>
-        <div class="detail_cont_tags">
-          <a v-for="(item, index) in detail.tags" :key="index">{{ item }}</a>
+        <div class="center" box="1">
+          <transition name="fade">
+            <span v-show="scrollVal > 100">{{ detail.title }}</span>
+          </transition>
         </div>
-        <div class="detail_cont_banner">
-          <img :src="detail.image" :alt="detail.title" />
+        <div
+          id="code"
+          class="right"
+          @mouseover="show_code = true;"
+          @mouseout="show_code = false;"
+        >
+          <i class="iconfont icon-QR"></i> <v-code v-show="show_code"></v-code>
         </div>
-        <div class="detail_cont_cont" v-html="detail.content"></div>
+      </div>
+      <div class="detail_cont">
+        <div class="min_container">
+          <div class="detail_cont_title">{{ detail.title }}</div>
+          <div class="detail_cont_time">
+            {{ detail.createdAt | getDate("year") }}
+          </div>
+          <div class="detail_cont_tags">
+            <a v-for="(item, index) in detail.tags" :key="index">{{ item }}</a>
+          </div>
+          <div class="detail_cont_banner">
+            <img :src="detail.image" :alt="detail.title" />
+          </div>
+          <div class="detail_cont_cont" v-html="detail.content"></div>
 
-        <div class="detail_discuss">
-          <div class="detail_discuss_btn">
-            <FrameBtn @click="open_discuss" text="发表留言"></FrameBtn>
+          <div class="detail_discuss">
+            <div class="detail_discuss_btn">
+              <FrameBtn @click="open_discuss" text="发表留言"></FrameBtn>
+            </div>
+            <div class="detail_discuss_input">
+              <div class="detail_discuss_input_num">{{ total }}条评论</div>
+              <!-- <div class="detail_discuss_input_input"> -->
+              <!-- <c-input -->
+              <!-- v-model="discuss" -->
+              <!-- type="textarea" -->
+              <!-- :autosize="{ minRows: 4 }" -->
+              <!-- placeholder="说点儿什么吧..." -->
+              <!-- /> -->
+              <!-- </div> -->
+              <!-- <div class="detail_discuss_input_btn"> -->
+              <!--
+                <c-button @click="submit_discuss" type="primary" size="large">
+              -->
+              <!-- 发表评论 -->
+              <!-- </c-button> -->
+              <!-- </div> -->
+            </div>
           </div>
-          <div class="detail_discuss_input">
-            <div class="detail_discuss_input_num">{{ total }}条评论</div>
-            <!-- <div class="detail_discuss_input_input"> -->
-            <!-- <c-input -->
-            <!-- v-model="discuss" -->
-            <!-- type="textarea" -->
-            <!-- :autosize="{ minRows: 4 }" -->
-            <!-- placeholder="说点儿什么吧..." -->
-            <!-- /> -->
-            <!-- </div> -->
-            <!-- <div class="detail_discuss_input_btn"> -->
-            <!--
-              <c-button @click="submit_discuss" type="primary" size="large">
-            -->
-            <!-- 发表评论 -->
-            <!-- </c-button> -->
-            <!-- </div> -->
-          </div>
-        </div>
-        <!-- comments -->
-        <div class="detail_comments">
-          <div class="detail_comments_list">
-            <div
-              class="detail_comments_list_item"
-              flex=""
-              v-for="(item, index) in comments"
-              :key="index"
-            >
-              <div class="detail_comments_list_item_image">
-                <img :src="item.headImage" alt="" />
-              </div>
-              <div class="detail_comments_list_item_text" box="1">
-                <div
-                  class="detail_comments_list_item_text_title"
-                  flex
-                  justify="between"
-                >
-                  <h3>{{ item.name }}</h3>
-                  <span>{{ item.floor }} L</span>
+          <!-- comments -->
+          <div class="detail_comments">
+            <div class="detail_comments_list">
+              <div
+                class="detail_comments_list_item"
+                flex=""
+                v-for="(item, index) in comments"
+                :key="index"
+              >
+                <div class="detail_comments_list_item_image">
+                  <img :src="item.headImage" alt="" />
                 </div>
-                <div class="detail_comments_list_item_text_cont">
-                  {{ item.desc }}
-                </div>
-                <div class="detail_comments_list_item_text_time">
-                  {{ item.createdAt | getDate }}
-                  <a @click="reply_fun(item, item._id);">回复</a>
-                </div>
-                <div
-                  v-show="item.reply && item.reply.length"
-                  class="detail_comments_list_item_text_reply"
-                  flex
-                  v-for="(reply_item, reply_key) in item.reply"
-                  :key="reply_key"
-                >
-                  <div class="detail_comments_list_item_image">
-                    <img :src="reply_item.headImage" alt="" />
+                <div class="detail_comments_list_item_text" box="1">
+                  <div
+                    class="detail_comments_list_item_text_title"
+                    flex
+                    justify="between"
+                  >
+                    <h3>{{ item.name }}</h3>
+                    <span>{{ item.floor }} L</span>
                   </div>
-                  <div class="detail_comments_list_item_text">
-                    <div
-                      class="detail_comments_list_item_text_title"
-                      flex
-                      justify="between"
-                    >
-                      <h3>
-                        <span>@{{ reply_item.name }}</span> 回复
-                        <span>@{{ reply_item.answer.name }}</span>
-                      </h3>
+                  <div class="detail_comments_list_item_text_cont">
+                    {{ item.desc }}
+                  </div>
+                  <div class="detail_comments_list_item_text_time">
+                    {{ item.createdAt | getDate }}
+                    <a @click="reply_fun(item, item._id);">回复</a>
+                  </div>
+                  <div
+                    v-show="item.reply && item.reply.length"
+                    class="detail_comments_list_item_text_reply"
+                    flex
+                    v-for="(reply_item, reply_key) in item.reply"
+                    :key="reply_key"
+                  >
+                    <div class="detail_comments_list_item_image">
+                      <img :src="reply_item.headImage" alt="" />
                     </div>
-                    <div class="detail_comments_list_item_text_cont">
-                      {{ reply_item.desc }}
-                    </div>
-                    <div class="detail_comments_list_item_text_time">
-                      {{ reply_item.createdAt | getDate }}
-                      <a @click="reply_fun(reply_item, item._id);">回复</a>
+                    <div class="detail_comments_list_item_text">
+                      <div
+                        class="detail_comments_list_item_text_title"
+                        flex
+                        justify="between"
+                      >
+                        <h3>
+                          <span>@{{ reply_item.name }}</span> 回复
+                          <span>@{{ reply_item.answer.name }}</span>
+                        </h3>
+                      </div>
+                      <div class="detail_comments_list_item_text_cont">
+                        {{ reply_item.desc }}
+                      </div>
+                      <div class="detail_comments_list_item_text_time">
+                        {{ reply_item.createdAt | getDate }}
+                        <a @click="reply_fun(reply_item, item._id);">回复</a>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -119,70 +121,76 @@
           </div>
         </div>
       </div>
+      <infinite-loading
+        :identifier="infiniteId"
+        ref="infinite"
+        @infinite="_getComment"
+      ></infinite-loading>
+      <!-- 返回顶部 -->
+      <BackTop></BackTop>
+      <!-- 发表留言 -->
+      <Modal draggable v-model="show_discuss" title="发表留言">
+        <c-form
+          ref="formValidate"
+          :model="formValidate"
+          :rules="ruleValidate"
+          :label-width="80"
+        >
+          <div v-if="reply" class="reply_tips">
+            回复<a>@{{ reply.name }}:</a>
+          </div>
+          <FormItem label="说点什么" prop="desc">
+            <c-input
+              v-model="formValidate.desc"
+              type="textarea"
+              :autosize="{ minRows: 4 }"
+              placeholder="说点儿什么吧..."
+            />
+          </FormItem>
+          <div v-if="!user_id">
+            <FormItem label="昵称" prop="name">
+              <c-input v-model="formValidate.name" placeholder="输入您的昵称" />
+            </FormItem>
+            <FormItem label="邮箱" prop="mail">
+              <c-input
+                v-model="formValidate.mail"
+                placeholder="邮箱不会被公开显示"
+              />
+            </FormItem>
+            <FormItem label="QQ" prop="qq">
+              <c-input
+                v-model.number="formValidate.qq"
+                placeholder="QQ不会被公开显示"
+              />
+            </FormItem>
+            <FormItem label="url" prop="url">
+              <c-input
+                v-model="formValidate.url"
+                placeholder="Url会被当做昵称的外链使用,您可以放置您的个人博客于此"
+              />
+            </FormItem>
+          </div>
+        </c-form>
+        <div slot="footer">
+          <c-button size="large" @click="cancel_visitor('formValidate');"
+            >取消</c-button
+          >
+          <c-button
+            type="primary"
+            size="large"
+            :loading="loading"
+            @click="submit_visitor('formValidate');"
+            >确定</c-button
+          >
+        </div>
+      </Modal>
+      <!-- 分享 -->
+      <Share
+        :comments="total"
+        @likeHandle="likeHandle"
+        @commentsHandle="commentsHandle"
+      ></Share>
     </div>
-    <infinite-loading
-      :identifier="infiniteId"
-      ref="infinite"
-      @infinite="_getComment"
-    ></infinite-loading>
-    <!-- 返回顶部 -->
-    <BackTop></BackTop>
-    <!-- 发表留言 -->
-    <Modal draggable v-model="show_discuss" title="发表留言">
-      <c-form
-        ref="formValidate"
-        :model="formValidate"
-        :rules="ruleValidate"
-        :label-width="80"
-      >
-        <div v-if="reply" class="reply_tips">
-          回复<a>@{{ reply.name }}:</a>
-        </div>
-        <FormItem label="说点什么" prop="desc">
-          <c-input
-            v-model="formValidate.desc"
-            type="textarea"
-            :autosize="{ minRows: 4 }"
-            placeholder="说点儿什么吧..."
-          />
-        </FormItem>
-        <div v-if="!user_id">
-          <FormItem label="昵称" prop="name">
-            <c-input v-model="formValidate.name" placeholder="输入您的昵称" />
-          </FormItem>
-          <FormItem label="邮箱" prop="mail">
-            <c-input
-              v-model="formValidate.mail"
-              placeholder="邮箱不会被公开显示"
-            />
-          </FormItem>
-          <FormItem label="QQ" prop="qq">
-            <c-input
-              v-model.number="formValidate.qq"
-              placeholder="QQ不会被公开显示"
-            />
-          </FormItem>
-          <FormItem label="url" prop="url">
-            <c-input
-              v-model="formValidate.url"
-              placeholder="Url会被当做昵称的外链使用,您可以放置您的个人博客于此"
-            />
-          </FormItem>
-        </div>
-      </c-form>
-      <div slot="footer">
-        <c-button size="large" @click="cancel_visitor('formValidate');"
-          >取消</c-button
-        >
-        <c-button
-          type="primary"
-          size="large"
-          :loading="loading"
-          @click="submit_visitor('formValidate');"
-          >确定</c-button
-        >
-      </div>
-    </Modal>
   </div>
 </template>
 
@@ -192,6 +200,7 @@ import { getScrollTop } from "../../lib/index";
 import Code from "../../components/common/QRCode";
 import BackTop from "../../components/public/BackTop/BackTop";
 import FrameBtn from "../../components/public/FrameBtn/FrameBtn";
+import Share from "../Blog/components/Share";
 import { mapGetters } from "vuex";
 export default {
   name: "detail",
@@ -274,7 +283,8 @@ export default {
   components: {
     VCode: Code,
     BackTop,
-    FrameBtn
+    FrameBtn,
+    Share
   },
   beforeRouteEnter(to, from, next) {
     window.scroll(0, 0);
@@ -388,6 +398,14 @@ export default {
       //   this.reply.pid = this.reply._id;
       // }
       this.show_discuss = true;
+    },
+    // 喜欢
+    likeHandle() {
+
+    },
+    // 左侧评论
+    commentsHandle() {
+
     }
   }
 };
@@ -403,10 +421,20 @@ export default {
   /*top: 0;*/
   /*bottom: 0;*/
   /*overflow: auto;*/
-  background-color: #fff;
+  /*background-image: linear-gradient(to right top, #ffcc00 50%, #fff 50%);*/
+  /*background-repeat: no-repeat;*/
+  background-color: @background_color;
   z-index: 1000;
   padding: 50px 0;
+  position: relative;
   /*min-height: 100vh;*/
+  .detail_box {
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 960px;
+    background-color: #ffffff;
+  }
   .detail_head {
     height: 50px;
     text-align: center;
@@ -415,6 +443,7 @@ export default {
     width: 100%;
     position: fixed;
     top: 0;
+    left: 0;
     z-index: 10;
     padding: 0 20px;
     line-height: 50px;

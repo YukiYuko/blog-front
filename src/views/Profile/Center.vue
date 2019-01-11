@@ -9,11 +9,14 @@
           </div>
           <div class="center_box_head_center" box="1">
             <h3>{{ userInfo.userName }}</h3>
-            <p>你的职位</p>
-            <p>介绍一下自己吧</p>
+            <p>{{ userInfo.job }}</p>
+            <p>{{ userInfo.introduce }}</p>
           </div>
           <div class="center_box_head_right">
-            <EffectBtn @click="go('setting',{type: 'profile'})" text="编辑资料"></EffectBtn>
+            <EffectBtn
+              @click="go('setting', { type: 'profile' });"
+              text="编辑资料"
+            ></EffectBtn>
           </div>
         </div>
       </div>
