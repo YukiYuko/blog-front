@@ -10,7 +10,7 @@ import {
   changePassword,
   likeNews
 } from "./ajax/api";
-import { getStorage, setStorage } from "./lib/localstorage";
+import { getStorage, setStorage, removeStorage } from "./lib/localstorage";
 
 Vue.use(Vuex);
 
@@ -68,16 +68,27 @@ export default new Vuex.Store({
     save({ commit }, data) {
       commit("save", data);
     },
+    loginOut({ state }) {
+      state.token = "";
+      state.userInfo = USER_INFO;
+      state.user_id = "";
+      removeStorage("token");
+      removeStorage("userInfo");
+      removeStorage("user_id");
+      Message.success("退出成功！");
+    },
     getNav({ commit }) {
       getTags({ type: 2 }).then(res => {
         commit("setNav", res.data);
       });
     },
     _getUser({ commit, state }) {
-      getUser({ _id: state.user_id }).then(res => {
-        commit("setUser", res.data);
-        setStorage("userInfo", JSON.stringify(res.data));
-      });
+      if (state.user_id) {
+        getUser({ _id: state.user_id }).then(res => {
+          commit("setUser", res.data);
+          setStorage("userInfo", JSON.stringify(res.data));
+        });
+      }
     },
     _updateUser({ commit, state }, data) {
       updateUser({ _id: state.user_id, data }).then(() => {
@@ -108,7 +119,7 @@ export default new Vuex.Store({
       });
     },
     // 喜欢文章
-    _likeNews({ commit, state }, data) {
+    _likeNews({ state }, data) {
       let params = { ...data, uid: state.user_id };
       likeNews(params).then(res => {
         console.log(res);

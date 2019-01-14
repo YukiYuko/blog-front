@@ -53,7 +53,7 @@
             <ul>
               <li @click="go('center', { id: userInfo._id });">个人中心</li>
             </ul>
-            <div class="login_out">退出</div>
+            <div class="login_out" @click="loginOut">退出</div>
           </div>
         </div>
       </div>
@@ -87,7 +87,7 @@ export default {
     this._getUser();
   },
   methods: {
-    ...mapActions(["save", "getNav", "_getUser"]),
+    ...mapActions(["save", "getNav", "_getUser", "loginOut"]),
     // 乱序
     shuffle(a) {
       let len = a.length;
