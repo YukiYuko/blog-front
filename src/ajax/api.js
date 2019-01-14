@@ -35,11 +35,18 @@ export const updateUser = data => api.post(base_url + "/users/update", data);
  * */
 export const changePassword = data =>
   api.post(base_url + "/users/updatePassword", data);
+/*
+ * 点赞喜欢
+ * @params: uid 用户ID
+ * @params: aid 文章ID
+ * */
+export const likeNews = data => api.post(base_url + "/news/like", data);
 //*******************用户相关**************
 /*
  * 获取必应地址
  * */
 export const getImg = data => jsonp(biying, data);
+//*******************新闻相关**************
 /*
  * 获取新闻列表
  * */

@@ -7,7 +7,8 @@ import {
   getTags,
   getUser,
   updateUser,
-  changePassword
+  changePassword,
+  likeNews
 } from "./ajax/api";
 import { getStorage, setStorage } from "./lib/localstorage";
 
@@ -104,6 +105,13 @@ export default new Vuex.Store({
           },
           content: res.info
         });
+      });
+    },
+    // 喜欢文章
+    _likeNews({ commit, state }, data) {
+      let params = { ...data, uid: state.user_id };
+      likeNews(params).then(res => {
+        console.log(res);
       });
     }
   }

@@ -186,8 +186,10 @@
       </Modal>
       <!-- 分享 -->
       <Share
+        :likes="detail.likes"
         :comments="total"
         @likeHandle="likeHandle"
+        :isLike="detail.isLike"
         @commentsHandle="commentsHandle"
       ></Share>
     </div>
@@ -201,7 +203,7 @@ import Code from "../../components/common/QRCode";
 import BackTop from "../../components/public/BackTop/BackTop";
 import FrameBtn from "../../components/public/FrameBtn/FrameBtn";
 import Share from "../Blog/components/Share";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   name: "detail",
   data() {
@@ -267,7 +269,8 @@ export default {
       comments: [],
       total: 0,
       page: 1,
-      pid: ""
+      pid: "",
+      likeType: "like"
     };
   },
   computed: {
@@ -298,10 +301,12 @@ export default {
     this.scroll();
   },
   methods: {
+    ...mapActions(["_likeNews"]),
     getData() {
-      getNewsDetail({ id: this.id }).then(res => {
+      getNewsDetail({ id: this.id, uid: this.user_id }).then(res => {
         const { data } = res;
         this.detail = data;
+        this.likeType = data.isLike ? "unlike" : "like";
       });
     },
     scroll() {
@@ -401,12 +406,21 @@ export default {
     },
     // 喜欢
     likeHandle() {
-
+      this._likeNews({ aid: this.id, type: this.likeType }).then(() => {
+        this.$Message.success("成功!");
+        if (this.likeType === "like") {
+          this.detail.likes += 1;
+          this.likeType = "unlike";
+          this.detail.isLike = true;
+        } else {
+          this.detail.likes -= 1;
+          this.likeType = "like";
+          this.detail.isLike = false;
+        }
+      });
     },
     // 左侧评论
-    commentsHandle() {
-
-    }
+    commentsHandle() {}
   }
 };
 </script>

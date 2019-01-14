@@ -1,12 +1,12 @@
 <template>
   <div class="share">
     <ul>
-      <li @click="$emit('likeHandle')">
+      <li :class="{ active: isLike }" @click="$emit('likeHandle');">
         <Tooltip content="喜欢" placement="right">
-          <i class="iconfont icon-dianzan"></i>
+          <i class="iconfont icon-dianzan"></i> <span>{{ likes || 0 }}</span>
         </Tooltip>
       </li>
-      <li class="active" @click="$emit('commentsHandle')">
+      <li :class="{ active: comments }" @click="$emit('commentsHandle');">
         <Tooltip content="评论" placement="right">
           <i class="iconfont icon-pinglun"></i> <span>{{ comments || 0 }}</span>
         </Tooltip>
@@ -37,7 +37,12 @@
 export default {
   name: "Share",
   props: {
-    comments: Number
+    comments: Number,
+    likes: Number,
+    isLike: {
+      type: Boolean,
+      default: false
+    }
   }
 };
 </script>
