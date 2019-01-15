@@ -19,6 +19,20 @@
             ></EffectBtn>
           </div>
         </div>
+        <div class="center_box_content">
+          <div class="center_box_content_menu">
+            <a class="active"
+              >喜欢 <span>{{ list.length }}</span></a
+            >
+          </div>
+          <div class="center_box_content_list">
+            <Item1
+              :data="item.artList"
+              v-for="(item, index) in list"
+              :key="index"
+            ></Item1>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -27,18 +41,34 @@
 <script>
 import HeadBar from "../Blog/components/HeadBar";
 import EffectBtn from "../../components/public/EffectBtn/EffectBtn";
+import Item1 from "../Blog/components/Item1";
 import { mapGetters, mapActions } from "vuex";
+import { likeNewsList } from "../../ajax/api";
 export default {
   name: "Center",
+  data() {
+    return {
+      list: []
+    };
+  },
   components: {
     HeadBar,
-    EffectBtn
+    EffectBtn,
+    Item1
   },
   computed: {
-    ...mapGetters(["userInfo"])
+    ...mapGetters(["userInfo", "user_id"])
+  },
+  mounted() {
+    this._likeNewsList();
   },
   methods: {
-    ...mapActions(["setUser"])
+    ...mapActions(["setUser"]),
+    _likeNewsList() {
+      likeNewsList({ uid: this.user_id }).then(res => {
+        this.list = res.data;
+      });
+    }
   }
 };
 </script>
@@ -55,6 +85,7 @@ export default {
       padding: 20px;
       background-color: #ffffff;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.16);
+      margin-bottom: 20px;
       &_left {
         margin-right: 30px;
         img {
@@ -78,6 +109,38 @@ export default {
       }
       &_right {
         height: 100%;
+      }
+    }
+    &_content {
+      &_menu {
+        height: 45px;
+        line-height: 45px;
+        border-bottom: 1px solid @border_color;
+        background-color: #ffffff;
+        margin-bottom: 20px;
+        a {
+          padding: 0 20px;
+          color: @title_color;
+          font-size: 14px;
+          transition: all 0.1s;
+          position: relative;
+          height: 100%;
+          span {
+            position: absolute;
+            top: 0;
+            right: 10px;
+            font-size: 12px;
+            line-height: 1;
+            color: @sub_color;
+          }
+          &.active {
+            color: @active_color;
+            font-size: 18px;
+            span{
+              color: @active_color;
+            }
+          }
+        }
       }
     }
   }

@@ -1,8 +1,8 @@
 <template>
   <div class="item1" @click="go('blog', { id: data._id });">
     <div class="time">
-      <div>2018/10</div>
-      <div>23&nbsp;&nbsp;周二</div>
+      <div>{{ _getTime.year + "/" + _getTime.month }}</div>
+      <div>{{ _getTime.date }}&nbsp;&nbsp;{{ _getTime.week }}</div>
     </div>
     <div class="title">{{ data.title }}</div>
     <div class="image"><img :src="data.image" alt="" /></div>
@@ -30,11 +30,18 @@
 </template>
 
 <script>
+import filters from "../../../filter/index";
 export default {
   name: "Item1",
   props: {
     data: Object
-  }
+  },
+  computed: {
+    _getTime: function() {
+      return filters.timeFilter(this.data.createdAt);
+    }
+  },
+  methods: {}
 };
 </script>
 
@@ -47,6 +54,7 @@ export default {
   position: relative;
   transition: all 0.2s;
   cursor: pointer;
+  margin-bottom: 20px;
   &:hover {
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
     &:before {

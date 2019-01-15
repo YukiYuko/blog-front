@@ -36,25 +36,10 @@
 
           <div class="detail_discuss">
             <div class="detail_discuss_btn">
-              <FrameBtn @click="open_discuss" text="发表留言"></FrameBtn>
+              <FrameBtn @click="open_discuss" text="发表评论"></FrameBtn>
             </div>
             <div class="detail_discuss_input">
               <div class="detail_discuss_input_num">{{ total }}条评论</div>
-              <!-- <div class="detail_discuss_input_input"> -->
-              <!-- <c-input -->
-              <!-- v-model="discuss" -->
-              <!-- type="textarea" -->
-              <!-- :autosize="{ minRows: 4 }" -->
-              <!-- placeholder="说点儿什么吧..." -->
-              <!-- /> -->
-              <!-- </div> -->
-              <!-- <div class="detail_discuss_input_btn"> -->
-              <!--
-                <c-button @click="submit_discuss" type="primary" size="large">
-              -->
-              <!-- 发表评论 -->
-              <!-- </c-button> -->
-              <!-- </div> -->
             </div>
           </div>
           <!-- comments -->
@@ -119,13 +104,20 @@
               </div>
             </div>
           </div>
+          <div class="loadMore" style="text-align: center">
+            <FrameBtn
+              :loading="btnLoading"
+              @click="_getComment"
+              :text="hasMore ? '更多评论' : '没有更多了'"
+            ></FrameBtn>
+          </div>
         </div>
       </div>
-      <infinite-loading
-        :identifier="infiniteId"
-        ref="infinite"
-        @infinite="_getComment"
-      ></infinite-loading>
+      <!-- <infinite-loading -->
+      <!-- :identifier="infiniteId" -->
+      <!-- ref="infinite" -->
+      <!-- @infinite="_getComment" -->
+      <!-- &gt;</infinite-loading> -->
       <!-- 返回顶部 -->
       <BackTop></BackTop>
       <!-- 发表留言 -->
@@ -270,7 +262,9 @@ export default {
       total: 0,
       page: 1,
       pid: "",
-      likeType: "like"
+      likeType: "like",
+      hasMore: true,
+      btnLoading: false
     };
   },
   computed: {
@@ -298,6 +292,7 @@ export default {
   },
   mounted() {
     this.getData();
+    this._getComment();
     this.scroll();
   },
   methods: {
@@ -371,24 +366,33 @@ export default {
       this.$refs[name].resetFields();
     },
     // 获取评论
-    _getComment($state) {
+    _getComment() {
+      if (!this.hasMore) {
+        return false;
+      }
       let params = {
         page: this.page,
         newsId: this.id
       };
-      getComment(params).then(res => {
-        const { data } = res.data;
-        if (data.length) {
-          setTimeout(() => {
-            this.page += 1;
-            this.comments = [...this.comments, ...data];
-            this.total = res.data.total;
-            $state.loaded();
-          }, 500);
-        } else {
-          $state.complete();
-        }
-      });
+      this.btnLoading = true;
+      getComment(params)
+        .then(res => {
+          const { data } = res.data;
+          if (data.length) {
+            setTimeout(() => {
+              this.page += 1;
+              this.comments = [...this.comments, ...data];
+              this.total = res.data.total;
+              this.btnLoading = false;
+            }, 1000);
+          } else {
+            this.hasMore = false;
+            this.btnLoading = false;
+          }
+        })
+        .catch(() => {
+          this.btnLoading = false;
+        });
     },
     open_discuss() {
       this.reply = "";
@@ -406,6 +410,9 @@ export default {
     },
     // 喜欢
     likeHandle() {
+      if (!this.user_id) {
+        return;
+      }
       this._likeNews({ aid: this.id, type: this.likeType }).then(() => {
         this.$Message.success("成功!");
         if (this.likeType === "like") {
@@ -420,7 +427,9 @@ export default {
       });
     },
     // 左侧评论
-    commentsHandle() {}
+    commentsHandle() {
+      this.show_discuss = true;
+    }
   }
 };
 </script>

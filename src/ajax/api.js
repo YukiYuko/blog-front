@@ -41,6 +41,11 @@ export const changePassword = data =>
  * @params: aid 文章ID
  * */
 export const likeNews = data => api.post(base_url + "/news/like", data);
+/*
+ * 点赞喜欢列表
+ * @params: uid 用户ID
+ * */
+export const likeNewsList = data => api.get(base_url + "/news/likeList", data);
 //*******************用户相关**************
 /*
  * 获取必应地址

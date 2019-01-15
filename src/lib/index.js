@@ -40,6 +40,34 @@ const getDate = (timeStamp, startType) => {
   else resStr = month + "-" + date + " " + hours + ":" + minutes;
   return resStr;
 };
+/*
+ * 时间过滤器
+ * */
+const timeFilter = timeStamp => {
+  let d;
+  if (typeof timeStamp !== "number") {
+    d = new Date(new Date(timeStamp).getTime());
+  } else {
+    d = new Date(timeStamp);
+  }
+  const year = d.getFullYear();
+  const month = getHandledValue(d.getMonth() + 1);
+  const date = getHandledValue(d.getDate());
+  const hours = getHandledValue(d.getHours());
+  const minutes = getHandledValue(d.getMinutes());
+  const second = getHandledValue(d.getSeconds());
+  const weeks = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+  const week = weeks[d.getDay()];
+  return {
+    year,
+    month,
+    date,
+    hours,
+    minutes,
+    second,
+    week
+  };
+};
 
 const checkStr = (str, type) => {
   switch (type) {
@@ -93,4 +121,4 @@ function getScrollTop() {
   return scroll_top;
 }
 
-export { getDate, checkStr, getScrollTop };
+export { getDate, checkStr, getScrollTop, timeFilter };

@@ -1,4 +1,6 @@
-import { getDate } from "../lib/index";
+import { getDate, timeFilter } from "../lib/index";
+
 export default {
-  getDate
+  getDate,
+  timeFilter
 };

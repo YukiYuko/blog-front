@@ -10,7 +10,7 @@
     </span>
     <span class="frame-btn__solid"></span>
     <span class="frame-btn__text">
-      <slot name="aa" :text="text"> {{ text }} </slot>
+      <slot name="aa" :text="text"> {{ !loading ? text : "加载中..." }} </slot>
     </span>
   </a>
 </template>
@@ -22,10 +22,14 @@ export default {
     text: {
       type: String,
       default: "Link Start !"
-    }
+    },
+    loading: Boolean
   },
   methods: {
     click() {
+      if (this.loading) {
+        return false;
+      }
       this.$emit("click");
     }
   }
