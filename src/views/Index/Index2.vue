@@ -63,6 +63,9 @@ export default {
   components: {
     // BackTop
   },
+  mounted() {
+    this.$loading.show();
+  },
   methods: {
     openDetail() {
       this.show = false;

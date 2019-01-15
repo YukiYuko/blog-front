@@ -9,10 +9,11 @@ import VueInsProgressBar from "vue-ins-progress-bar";
 import InfiniteLoading from "vue-infinite-loading";
 import "v-contextmenu/dist/index.css";
 import filters from "./filter";
+import YukiLoading from "./plugins/loading/index";
 Object.keys(filters).forEach(k => {
   Vue.filter(k, filters[k]);
 });
-
+Vue.use(YukiLoading);
 Vue.config.productionTip = false;
 const myMixin = {
   methods: {
