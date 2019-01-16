@@ -15,13 +15,11 @@
         </div>
       </div>
     </div>
-    <YukiAlert></YukiAlert>
   </div>
 </template>
 
 <script>
 // import BackTop from "../../components/public/BackTop/BackTop";
-import YukiAlert from "../../plugins/alert/alert";
 export default {
   name: "index",
   data() {
@@ -64,10 +62,10 @@ export default {
   },
   components: {
     // BackTop
-    YukiAlert
   },
   mounted() {
     console.log(this.$el);
+    this.$alert({ mes: "消息一出，休想滚动屏幕[移动终端]！" });
   },
   methods: {
     openDetail() {

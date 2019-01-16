@@ -1,0 +1,126 @@
+@import "mixins";
+
+@keyframes yd-kf-zoom-in {
+  from {
+    opacity: 0;
+    transform: scale3d(.3, .3, .3);
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes yd-kf-down-in {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -50px, 0);
+  }
+  50% {
+    opacity: .5;
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes yd-kf-up-out {
+  0% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(0, -50px, 0);
+  }
+}
+
+@keyframes yd-kf-rotate {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.@{css-prefix} {
+  &-dialog {
+    &-black-mask {
+      .mask(rgba(0, 0, 0, .5), @base-zindex * 2000);
+    }
+
+    &-white-mask {
+      .mask(rgba(0, 0, 0, 0), @base-zindex * 2000);
+    }
+  }
+
+  // Confirm =================
+  &-confirm {
+    width: 85%;
+    background-color: #FAFAFA;
+    border-radius: 2px;
+    font-size: 15px;
+    animation: yd-kf-zoom-in .15s ease forwards;
+  }
+
+  // Alert =================
+  &-alert {
+    animation: yd-kf-zoom-in .3s ease forwards;
+  }
+
+  // Toast =================
+  &-toast {
+    min-width: 124px;
+    max-width: 80%;
+    padding-top: 27px;
+    background: rgba(40, 40, 40, .85);
+    text-align: center;
+    border-radius: 3px;
+    color: #FFF;
+    animation: yd-kf-zoom-in .06s ease forwards;
+  }
+
+  // Notify =================
+  &-notify {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    right: 0;
+    background-color: rgba(40, 40, 40, .85);
+    line-height: .28rem;
+    font-size: .26rem;
+    color: #FFF;
+    padding: .4rem .24rem .3rem .24rem;
+    opacity: 0;
+    animation: yd-kf-down-in .2s linear forwards;
+    word-break: break-all;
+    text-align: center;
+    z-index: @base-zindex * 2000;
+    &-out {
+      animation: yd-kf-up-out .15s linear forwards;
+    }
+  }
+
+  // Loading =================
+  &-loading {
+    border-radius: 3px;
+    color: #FFF;
+    background-color: rgba(40, 40, 40, .85);
+    animation: yd-kf-zoom-in .1s ease forwards;
+    display: flex;
+    align-items: center;
+    padding: 0 23px 0 24px;
+    height: 48px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .@{css-prefix}-confirm {
+    width: 40%;
+  }
+}
