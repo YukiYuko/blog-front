@@ -7,7 +7,7 @@
         :style="`background-image: url(${item.img})`"
         v-for="(item, index) in menu"
         :key="index"
-        @click="go(item.url)"
+        @click="go(item.url);"
       >
         <div class="major">
           <h3>{{ item.title }}</h3>
@@ -15,11 +15,13 @@
         </div>
       </div>
     </div>
+    <YukiAlert></YukiAlert>
   </div>
 </template>
 
 <script>
 // import BackTop from "../../components/public/BackTop/BackTop";
+import YukiAlert from "../../plugins/alert/alert";
 export default {
   name: "index",
   data() {
@@ -62,9 +64,10 @@ export default {
   },
   components: {
     // BackTop
+    YukiAlert
   },
   mounted() {
-    this.$loading.show();
+    console.log(this.$el);
   },
   methods: {
     openDetail() {
@@ -98,33 +101,33 @@ export default {
       &:nth-child(3n + 1) {
         width: 40%;
       }
-      &:nth-child(1){
-        h3{
+      &:nth-child(1) {
+        h3 {
           text-shadow: 0 0 5px #6fc3df, 0 0 10px #fff, 0 0 15px #fff;
         }
       }
-      &:nth-child(2){
-        h3{
+      &:nth-child(2) {
+        h3 {
           text-shadow: 0 0 5px #8d82c4, 0 0 10px #fff, 0 0 15px #fff;
         }
       }
-      &:nth-child(3){
-        h3{
+      &:nth-child(3) {
+        h3 {
           text-shadow: 0 0 5px #ec8d81, 0 0 10px #fff, 0 0 15px #fff;
         }
       }
-      &:nth-child(4){
-        h3{
+      &:nth-child(4) {
+        h3 {
           text-shadow: 0 0 5px #e7b788, 0 0 10px #fff, 0 0 15px #fff;
         }
       }
-      &:nth-child(5){
-        h3{
+      &:nth-child(5) {
+        h3 {
           text-shadow: 0 0 5px #8ea9e8, 0 0 10px #fff, 0 0 15px #fff;
         }
       }
-      &:nth-child(6){
-        h3{
+      &:nth-child(6) {
+        h3 {
           text-shadow: 0 0 5px #87c5a4, 0 0 10px #fff, 0 0 15px #fff;
         }
       }
@@ -171,12 +174,12 @@ export default {
         width: 100%;
         z-index: 1;
       }
-      &:hover{
-        .major{
-          h3{
+      &:hover {
+        .major {
+          h3 {
             transform: translateY(-10px);
           }
-          p{
+          p {
             transform: translateY(10px);
           }
         }
