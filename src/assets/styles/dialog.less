@@ -69,6 +69,11 @@
 
   // Alert =================
   &-alert {
+    width: 85%;
+    background: #2e3846;
+    box-sizing: border-box;
+    padding: 20px;
+    border-radius: 6px;
     animation: yd-kf-zoom-in .3s ease forwards;
   }
 
@@ -120,7 +125,8 @@
 }
 
 @media screen and (min-width: 768px) {
-  .@{css-prefix}-confirm {
+  .@{css-prefix}-confirm,
+  .@{css-prefix}-alert{
     width: 40%;
   }
 }

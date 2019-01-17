@@ -23,11 +23,6 @@ export default {
 <style lang="less">
 @import "../../assets/styles/dialog";
 .yuki-alert {
-  width: 400px;
-  background: #2e3846;
-  box-sizing: border-box;
-  padding: 20px;
-  border-radius: 6px;
   &-head {
   }
   &-cont {
